@@ -16,6 +16,10 @@ dessas histórias foi feita; nenhum aceite de outro agente de produto foi presum
 - D04: revisão e release são etapas distintas. Agentes produzem candidato; operação real
   exige outra identidade e portões do ambiente.
 - D05: política versionada e adoção explícita. Uma mudança não pode atestar sua própria autoridade.
+- D06: requisito antes do plano, adotado em parte do spec-kit e subordinado à política
+  existente. O que entrou, o que foi recusado e por quê está no
+  [ADR 0001](adr/0001-adocao-parcial-do-spec-kit.md). A autonomia cresce porque o agente
+  passa a ter contra o que se conferir; não porque ganhou permissão nova.
 
 ## Achados incorporados
 
@@ -46,3 +50,24 @@ com tentativa nula, escopo em .git, colisão arquivo/diretório e descrição ex
 reserva após timeout. As correções incluem expectedRun separado, rolesDigest, tipos e
 schema fechado, rejeição de metadados/ambiente, comparação de reserva e texto preciso.
 Ensaios negativos estão em test/review-regressions.test.mjs.
+
+## Terceira revisão: a camada que faltava antes do plano
+
+A fundação sabia dizer quem podia agir, com que limite e sobre quais arquivos, mas não
+sabia dizer **contra o quê** conferir a entrega. O cartão pedia "objetivo observável" em
+texto livre; nada impedia um candidato de passar em escopo, teste e revisão e ainda assim
+resolver outro problema. O spec-kit foi avaliado para esse trecho e adotado em parte.
+
+Cinco lacunas fechadas, todas com ensaio negativo em test/spec-driven.test.mjs:
+
+| ID | Lacuna | Tratamento |
+|---|---|---|
+| R13 P0 | entrega sem requisito contra o qual se refutar | bloco `spec` obrigatório; requisito aponta a evidência que o derruba |
+| R14 P0 | dúvida implícita virava suposição do implementador | dúvida em aberto rejeita o plano inteiro |
+| R15 P0 | mudança de política ampliava plano já autorizado | plano fixado em `policyDigest`; mudar governança invalida o plano em voo |
+| R16 P1 | requisito sem tarefa e tarefa sem requisito passavam despercebidos | lacunas de cobertura bloqueiam, e `converge` relata sem bloquear |
+| R17 P1 | achado P0 podia ser fechado por reinterpretação no mesmo candidato | fechar exige nova geração |
+
+Limite honesto: `converge` confronta o plano consigo mesmo. Confrontar a especificação com
+o código que existe de fato é trabalho do executor da onda T5 e continua pendente. O léxico
+de termos vagos é heurística: recusa enunciado provavelmente inútil, não certifica o aceito.

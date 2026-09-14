@@ -10,6 +10,7 @@ export function syntheticCandidate(plan, task, policy, roles) {
   return {
     context, author:'synthetic-author', runState:'completed', attempt:1, elapsedMinutes:12,
     changedPaths:['packages/core/atp.mjs'], integratedDependencies:[...task.dependsOn],
+    coveredRequirements:[...task.covers],
     checks:[...new Set([...policy.requiredChecks, ...task.checks])].filter(k => k !== 'review')
       .map(name => ({name, context:{...context}, result:'passed', evidenceRef:'synthetic:check/'+name})),
     review:{context:{...context}, actor:'synthetic-reviewer', result:'passed', evidenceRef:'synthetic:review'},
@@ -27,7 +28,9 @@ export function simulate(plan, policy, roles) {
     ['tentativa de alterar política', c => { c.changedPaths.push('team/policy.json'); }],
     ['teste obrigatório falhou', c => { c.checks[0].result = 'failed'; }],
     ['dependência não integrada', c => { c.integratedDependencies = []; }],
-    ['tempo esgotado', c => { c.elapsedMinutes = 46; }]
+    ['tempo esgotado', c => { c.elapsedMinutes = 46; }],
+    ['requisito do cartão não rastreado', c => { c.coveredRequirements = []; }],
+    ['achado P0 fechado no próprio candidato', c => { c.findings = [{severity:'P0', status:'resolved', raisedInGeneration:1}]; }]
   ].map(([name, mutate]) => {
     const c = structuredClone(candidate); mutate(c);
     return {name, ...assessCandidate(plan, task.id, c, policy, roles, expectedRun)};

@@ -1,7 +1,32 @@
 {
-  "version": 1,
+  "version": 2,
   "repository": "lucasmezuraro/tramevia",
   "baseSha": "ef6a1242c9a57d09eb1c675b4cb1bed5368a8a0c",
+  "policyDigest": "7c87e1abf30983fdcf7a420588eb978024f70e518dce5b73286c632f99efdaec",
+  "spec": {
+    "clarifications": [],
+    "successCriteria": [
+      {
+        "id": "SC-001",
+        "statement": "A soma publicada das variações que disputam um componente não excede o disponível",
+        "measure": "0 unidade anunciada acima do disponível em 100% dos componentes do cenário"
+      }
+    ],
+    "requirements": [
+      {
+        "id": "FR-001",
+        "statement": "O cálculo deve reduzir a quota de cada variação até que a soma do consumo caiba no saldo do componente",
+        "criterion": "SC-001",
+        "check": "quota-invariant"
+      },
+      {
+        "id": "FR-002",
+        "statement": "O cálculo deve apontar o componente que produziu o mínimo de cada variação",
+        "criterion": "SC-001",
+        "check": "negative-oracle"
+      }
+    ]
+  },
   "tasks": [
     {
       "id": "F0-MAP",
@@ -18,6 +43,10 @@
         "read"
       ],
       "environment": "offline",
+      "covers": [
+        "FR-001",
+        "FR-002"
+      ],
       "checks": [
         "contract-map"
       ],
@@ -39,6 +68,9 @@
         "read"
       ],
       "environment": "offline",
+      "covers": [
+        "FR-002"
+      ],
       "checks": [
         "negative-oracle"
       ],
@@ -66,6 +98,9 @@
         "test"
       ],
       "environment": "offline",
+      "covers": [
+        "FR-001"
+      ],
       "checks": [
         "quota-invariant"
       ],

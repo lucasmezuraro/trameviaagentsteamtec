@@ -28,3 +28,37 @@
   Publicação desta branch é entrega de código/documentos ao repositório solicitado;
   não representa aprovação de operação de produção.
 
+## Camada de requisito — 2026-09-14
+
+- Autor desta entrega: Claude (Opus 5), a pedido do proprietário. Sem revisor independente:
+  a revisão do candidato continua pendente e nenhuma aprovação foi presumida.
+- Base: 52150d2883488161d5086e9bc44e892f29f821fc, publicado em `main` e
+  `codex/team-foundation`. Branch de trabalho: claude/spec-driven-adoption.
+- Origem avaliada: [github/spec-kit](https://github.com/github/spec-kit), README e dois
+  templates lidos pela web em 2026-09-14. O código-fonte do projeto não foi lido, nem o
+  pacote instalado ou executado; as regras adotadas foram reimplementadas e testadas aqui.
+- Escopo: `src/schema.mjs` e `src/spec.mjs` novos, `src/policy.mjs` e `src/cli.mjs`
+  alterados, plano de exemplo na versão 2, `templates/spec.md`, ADR 0001 e atualização de
+  AGENTS, README, docs/01, 02, 05, 06, 07, 21 e mapa HTML.
+- Validação pelo autor: 112 testes Node aprovados no Windows com Node 24.18.0 (79 antes,
+  33 acrescentados); `validate`, `converge`, `plan` e `simulate` executados sobre o plano de
+  exemplo; comando inválido continua falhando com código 1.
+- Não verificado: execução remota do CI, revisão independente deste candidato, leitura do
+  código do spec-kit e confronto da especificação com o repositório do produto.
+- Nenhuma autoridade nova foi concedida: a mudança só acrescenta motivos de recusa.
+
+## Resync Codex — 2026-09-14
+
+- Pedido do proprietário: resync. Base Codex 52150d2; remoto e branch do peer em
+  8a84379dba31dd444c9d4f3efc0e247ce4497a6c após fetch de origin.
+- Checkout inicialmente limpo na branch claude/spec-driven-adoption. Codex voltou à
+  própria branch codex/team-foundation e a avançou por merge --ff-only até 8a84379.
+  A branch do peer e main foram preservadas.
+- Validação no SHA sincronizado: 112 testes Node aprovados; validate e converge
+  aprovados sobre o plano de exemplo, sem lacunas declaradas; git diff --check limpo.
+- Trata-se de sincronização e verificação local, não de revisão profunda do novo
+  contrato nem de aprovação de produção. Revisão independente da camada spec e CI
+  remoto continuam pendentes de comprovação.
+- Registro acrescentado em commit próprio após os testes; sem mudança em código,
+  credenciais, ambientes, serviços ou dados de loja.
+

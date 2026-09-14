@@ -21,13 +21,16 @@ instalou um serviço autônomo. Nenhuma etapa inicia daemon, cron, modelo pago o
    Apenas leitura, entregue referências e não delegue novamente.”
 3. Registre host/versão e modo efetivo. Em diretório descartável, com autorização explícita
    para o ensaio, verifique que o perfil de leitura não pode editar. Não testar com segredo.
-4. Execute `node --test`, `node src/cli.mjs validate examples/plan.json` e
-   `node src/cli.mjs simulate`. Esses comandos não despacham agentes.
-5. Escolha cartão mínimo: adicionar um contraexemplo de escopo ao teste, em branch própria.
-   Confirme um escritor, revisão em leitura, teste no candidato e handoff.
-6. Publique branch/PR quando autorizado. Confira checks remotos e proteções; verde local
+4. Execute `node --test`, `node src/cli.mjs validate examples/plan.json`,
+   `node src/cli.mjs converge examples/plan.json` e `node src/cli.mjs simulate`.
+   Esses comandos não despacham agentes.
+5. Escreva a especificação do primeiro trabalho real em `templates/spec.md` antes do cartão.
+   Se sobrar dúvida em aberto, ela é resposta do fundador — não do especialista.
+6. Escolha cartão mínimo: adicionar um contraexemplo de escopo ao teste, em branch própria.
+   Confirme requisitos cobertos, um escritor, revisão em leitura, teste no candidato e handoff.
+7. Publique branch/PR quando autorizado. Confira checks remotos e proteções; verde local
    não substitui a execução remota. Feche T2/T3 com links e SHAs.
-7. Aplique o adaptador do MVP; perfis deste repo não aparecem automaticamente no repo
+8. Aplique o adaptador do MVP; perfis deste repo não aparecem automaticamente no repo
    do produto. Adoção exige mudança revisada nos perfis/AGENTS do produto ou configuração
    explícita do host. Não sobrescrever os perfis antigos por cópia silenciosa.
 
@@ -50,6 +53,10 @@ O adapter deverá aceitar cartão já validado; obter identidade de supervisor; 
 recursos de forma transacional; criar ambiente efêmero; fixar base/política; aplicar egress;
 despachar modelo; registrar evento durável; interromper no limite; colher artefato; pedir
 revisão independente; devolver candidato. Produção não entra nesse adapter inicial.
+
+Cabe a esse executor o que `converge` ainda não faz: confrontar a especificação com o código
+que existe de fato. Hoje a cobertura é verificada dentro do plano; requisito atendido no
+papel e ausente no repositório continua invisível para o laboratório.
 
 Não instalar framework, banco, fila ou SDK apenas para representar papéis. O pacote
 atual custa zero em infraestrutura própria. Uso de modelos e GitHub Actions depende da
