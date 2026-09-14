@@ -1,0 +1,154 @@
+{
+  "version": 3,
+  "repository": "lucasmezuraro/trameviaagentsteamtec",
+  "baseSha": "65ace38dd1977755dda42291c0f52252df8f7186",
+  "policyDigest": "51f69ba9dd81db1831f712cae4bb563c4aa59a9714ec0643d55e0a22bec8c6cc",
+  "rolesDigest": "20622bf5cbf00a9e8b8707da7ccbbe6f3321e158136535d915946844f35c192e",
+  "spec": {
+    "clarifications": [],
+    "successCriteria": [
+      {
+        "id": "SC-001",
+        "statement": "Nenhum recurso é reservado para trabalho que a política não autoriza",
+        "measure": "0 execução iniciada em 100% dos cartões com plano inválido"
+      },
+      {
+        "id": "SC-002",
+        "statement": "Uma execução interrompida nunca libera tentativa sem reconciliação",
+        "measure": "0 retomada liberada em 100 interrupções ensaiadas"
+      },
+      {
+        "id": "SC-003",
+        "statement": "Toda transição de execução deixa rastro conferível",
+        "measure": "1 evento durável por transição, com sequência monotônica por run"
+      }
+    ],
+    "requirements": [
+      {
+        "id": "FR-001",
+        "statement": "O executor deve recusar o cartão cujo plano não valide na política vigente, antes de reservar qualquer recurso",
+        "criterion": "SC-001",
+        "check": "invalid-card-refused"
+      },
+      {
+        "id": "FR-002",
+        "statement": "O executor deve registrar um evento durável por transição de run, com sequência monotônica, recusando evento repetido ou de geração obsoleta",
+        "criterion": "SC-003",
+        "check": "monotonic-event-log"
+      },
+      {
+        "id": "FR-003",
+        "statement": "O executor deve encerrar o processo do especialista ao atingir o limite de tempo do cartão e marcar o run como interrompido sem resultado conhecido",
+        "criterion": "SC-002",
+        "check": "timeout-interrupts"
+      },
+      {
+        "id": "FR-004",
+        "statement": "O executor deve recusar nova tentativa enquanto o run interrompido não tiver processo encerrado e checkout reconciliado",
+        "criterion": "SC-002",
+        "check": "retry-requires-reconcile"
+      },
+      {
+        "id": "FR-005",
+        "statement": "O executor deve obter a identidade do supervisor de fonte externa ao candidato e recusar a execução quando ela não for verificável",
+        "criterion": "SC-001",
+        "check": "unverified-supervisor-refused"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T5-MAP",
+      "objective": "Mapear onde o laboratório atual já cobre transição de run e onde falta ponto de entrada para um executor",
+      "role": "team_explorer",
+      "dependsOn": [],
+      "paths": [
+        "src/policy.mjs",
+        "src/gate.mjs",
+        "docs/04-observabilidade-e-recuperacao.md"
+      ],
+      "resources": [
+        "executor-contract"
+      ],
+      "actions": [
+        "read"
+      ],
+      "environment": "offline",
+      "covers": [
+        "FR-001",
+        "FR-005"
+      ],
+      "checks": [
+        "contract-map"
+      ],
+      "maxAttempts": 1,
+      "maxMinutes": 25
+    },
+    {
+      "id": "T5-ORACLE",
+      "objective": "Derivar a matriz de aceite do contrato, com o caso negativo de cada requisito antes do código",
+      "role": "team_test_designer",
+      "dependsOn": [],
+      "paths": [
+        "test/policy.test.mjs",
+        "test/review-regressions.test.mjs",
+        "specs/t5-executor/spec.md"
+      ],
+      "resources": [
+        "acceptance-matrix"
+      ],
+      "actions": [
+        "read"
+      ],
+      "environment": "offline",
+      "covers": [
+        "FR-002",
+        "FR-003",
+        "FR-004"
+      ],
+      "checks": [
+        "acceptance-matrix"
+      ],
+      "maxAttempts": 1,
+      "maxMinutes": 30
+    },
+    {
+      "id": "T5-CONTRACT",
+      "objective": "Implementar o contrato puro do executor com os cinco ensaios negativos; sem fila, hospedagem ou credencial",
+      "role": "team_implementer",
+      "dependsOn": [
+        "T5-MAP",
+        "T5-ORACLE"
+      ],
+      "paths": [
+        "src/executor.mjs",
+        "test/executor.test.mjs"
+      ],
+      "resources": [
+        "executor-contract"
+      ],
+      "actions": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "environment": "offline",
+      "covers": [
+        "FR-001",
+        "FR-002",
+        "FR-003",
+        "FR-004",
+        "FR-005"
+      ],
+      "checks": [
+        "invalid-card-refused",
+        "monotonic-event-log",
+        "timeout-interrupts",
+        "retry-requires-reconcile",
+        "unverified-supervisor-refused"
+      ],
+      "maxAttempts": 2,
+      "maxMinutes": 45
+    }
+  ]
+}

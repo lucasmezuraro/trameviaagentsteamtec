@@ -1,0 +1,58 @@
+{
+  "version": 3,
+  "repository": "lucasmezuraro/trameviaagentsteamtec",
+  "baseSha": "65ace38dd1977755dda42291c0f52252df8f7186",
+  "policyDigest": "51f69ba9dd81db1831f712cae4bb563c4aa59a9714ec0643d55e0a22bec8c6cc",
+  "rolesDigest": "20622bf5cbf00a9e8b8707da7ccbbe6f3321e158136535d915946844f35c192e",
+  "spec": {
+    "clarifications": [
+      "Onde o executor roda sem sessão aberta, e quem paga essa conta?",
+      "Qual fonte de identidade autentica o supervisor: GitHub, OIDC de provedor, ou outra?",
+      "Qual o teto de gasto por cartão, por dia e por loja, e o que acontece ao atingi-lo?",
+      "Onde o evento durável é armazenado, por quanto tempo, e quem pode lê-lo?"
+    ],
+    "successCriteria": [
+      {
+        "id": "SC-001",
+        "statement": "Um cartão vira candidato sem sessão humana aberta",
+        "measure": "10 cartões completados com 0 sessão de chat aberta"
+      }
+    ],
+    "requirements": [
+      {
+        "id": "FR-001",
+        "statement": "O executor deve despachar o especialista em ambiente efêmero e devolver o candidato sem intervenção durante a execução",
+        "criterion": "SC-001",
+        "check": "unattended-dispatch"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T5-HOST",
+      "objective": "Despachar em ambiente efêmero hospedado e devolver candidato sem sessão aberta",
+      "role": "team_implementer",
+      "dependsOn": [],
+      "paths": [
+        "src/executor.mjs"
+      ],
+      "resources": [
+        "executor-host"
+      ],
+      "actions": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "environment": "offline",
+      "covers": [
+        "FR-001"
+      ],
+      "checks": [
+        "unattended-dispatch"
+      ],
+      "maxAttempts": 2,
+      "maxMinutes": 45
+    }
+  ]
+}

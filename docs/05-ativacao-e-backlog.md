@@ -10,7 +10,7 @@ instalou um serviço autônomo. Nenhuma etapa inicia daemon, cron, modelo pago o
 | T2 | Uma tarefa sintética com escritor e revisor | implementador + reviewer | branch, diff, testes, handoff e revisão de SHA |
 | T3 | Confirmar proteções e CI no GitHub | proprietário + coordenador | check remoto, regra efetiva, teste negativo de merge |
 | T4 | Primeira fatia F0 do MVP | time, adaptador Tramevia | um ciclo completo integrado, sem operação de loja |
-| T5 | Executor persistente, se houver necessidade medida | arquiteto + operador | idempotência, cancelamento, orçamento e identidade ensaiados |
+| T5 | Executor persistente, se houver necessidade medida ([especificação](../specs/t5-executor/spec.md)) | arquiteto + operador | idempotência, cancelamento, orçamento e identidade ensaiados |
 | T6 | Acesso DEV/HOM explicitamente delimitado | operador | provedor/credencial/approval/restore verificados |
 | T7 | Avaliar automação ampliada | fundador | custo, retrabalho e incidentes de pelo menos dez tarefas |
 
@@ -57,6 +57,12 @@ revisão independente; devolver candidato. Produção não entra nesse adapter i
 Cabe a esse executor o que `converge` ainda não faz: confrontar a especificação com o código
 que existe de fato. Hoje a cobertura é verificada dentro do plano; requisito atendido no
 papel e ausente no repositório continua invisível para o laboratório.
+
+A especificação está escrita em [`specs/t5-executor/spec.md`](../specs/t5-executor/spec.md),
+partida em duas fatias. A **fatia 1** — o contrato do executor — não depende de nenhuma
+decisão pendente, é verificável offline e seu plano valida. A **fatia 2** — hospedagem,
+identidade e orçamento — carrega quatro dúvidas que são decisão do fundador, e por isso seu
+plano é **recusado pelo validador**. Quem decide o que pode começar é a regra, não a pressa.
 
 Não instalar framework, banco, fila ou SDK apenas para representar papéis. O pacote
 atual custa zero em infraestrutura própria. Uso de modelos e GitHub Actions depende da
