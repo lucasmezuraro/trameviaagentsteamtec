@@ -1,6 +1,6 @@
 # ADR 0003 · Skills técnicas e governança de papéis
 
-**Status:** aceito para a fundação operacional.  
+**Status:** aceito para a fundação operacional.
 **Data:** 2026-09-14.
 
 ## Contexto
