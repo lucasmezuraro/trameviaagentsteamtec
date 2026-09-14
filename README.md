@@ -17,7 +17,8 @@ processos, não autentica aprovações e não faz deploy. Nenhum serviço ou por
 4. Escreva a [especificação](templates/spec.md) antes do primeiro cartão; sem requisito
    numerado e sem dúvida resolvida, nenhum plano é válido ([ADR 0001](docs/adr/0001-adocao-parcial-do-spec-kit.md)).
 5. Execute o laboratório abaixo; a massa é sintética.
-6. Siga [a ativação progressiva](docs/05-ativacao-e-backlog.md) para a primeira tarefa real.
+6. Instale o portão local (uma vez) e siga
+   [a ativação progressiva](docs/05-ativacao-e-backlog.md) para a primeira tarefa real.
 
 ```sh
 node --test
@@ -26,6 +27,21 @@ node src/cli.mjs converge examples/plan.json
 node src/cli.mjs plan examples/plan.json
 node src/cli.mjs simulate
 ```
+
+Sobre uma mudança real, o supervisor observa e o modelo julga — nesta ordem, e em processos
+separados ([ADR 0002](docs/adr/0002-portoes-executaveis-e-missoes.md)):
+
+```sh
+git config core.hooksPath hooks
+node scripts/observe.mjs origin/main HEAD --collector local-hook > observation.json
+node src/cli.mjs guard observation.json
+node src/cli.mjs gate examples/observation.json examples/plan.json F0-CORE
+```
+
+`guard` recusa mudança na superfície de controle sem um `Control-Surface: docs/adr/NNNN-*.md`
+no commit. Ele sai com código 1 e a mesma avaliação roda na CI, onde o autor não é dono do
+runner. Nenhum resultado se chama "aprovado": o sucesso é `clear_on_observable_facts` e vem
+acompanhado do que **não** foi verificado.
 
 Node.js 22 ou 24; nenhuma dependência npm, chave de API ou conta de hospedagem.
 A execução local é só CLI/testes puros. Testes futuros que precisarem de Postgres,
@@ -36,7 +52,9 @@ Redis ou servidor web deverão usar ambiente efêmero hospedado.
 | Entrega | Situação |
 |---|---|
 | Papéis, escopo, transferência de contexto e incidentes | Contratos versionados |
-| Perfis em `.codex/agents` | Arquivos criados; descoberta/sandbox ainda precisam de ensaio no host |
+| Missões com entrada, conclusão e parada + procedimento por papel | Declaradas em `team/roles.json`, com `procedures/` e teste de completude |
+| Perfis em `.codex/agents` | Gerados do catálogo com teste de sincronia; descoberta/sandbox ainda precisam de ensaio no host |
+| Superfície de controle protegida por portão | Recusa efetiva no pre-push e na CI; declaração por trailer de commit |
 | DAG, limites, escopo e revisão de candidato | Modelo executável com testes negativos |
 | Requisito, critério mensurável e cobertura até a evidência | Validado no plano; confronto com o código real depende do executor (T5) |
 | GitHub Actions | Workflow definido; execução remota só se comprova no GitHub |
@@ -52,8 +70,10 @@ Redis ou servidor web deverão usar ambiente efêmero hospedado.
 - [Operação e observabilidade](docs/04-observabilidade-e-recuperacao.md): eventos, métricas, retomada e backups.
 - [Revisão e decisões](docs/06-revisao-e-decisoes.md): achados e limites da fundação.
 - [Adaptador Tramevia](projects/tramevia.md): contratos do produto e sequência de adoção.
+- [Procedimentos](procedures/): o passo a passo de cada missão, carregado por quem a executa.
 - [Especificação](templates/spec.md), [cartão](templates/task.md), [handoff](templates/handoff.md), [incidente](templates/incident.md).
-- [Decisões arquiteturais](docs/adr/0001-adocao-parcial-do-spec-kit.md): o que foi adotado do spec-kit, o que foi recusado e por quê.
+- Decisões arquiteturais: [ADR 0001](docs/adr/0001-adocao-parcial-do-spec-kit.md) (requisito antes do plano)
+  e [ADR 0002](docs/adr/0002-portoes-executaveis-e-missoes.md) (portões que recusam e missões delimitadas).
 - [Fontes](docs/07-fontes.md): documentação primária e data de consulta.
 - [Registro de entrega](docs/21-colaboracao.md): base, revisão, validações e pendências.
 

@@ -3,41 +3,60 @@
     "id": "team_explorer",
     "title": "Exploração e arquitetura",
     "sandbox": "read-only",
-    "mission": "Mapear contratos, dependências e incertezas com referências ao commit-base. Propor alternativas e custo; não decidir produto nem editar.",
-    "output": "Mapa de impacto, perguntas bloqueantes e plano mínimo",
-    "forbidden": "Não implementar, alterar ADR ou declarar hipótese externa como fato."
-  },
-  {
-    "id": "team_implementer",
-    "title": "Implementação",
-    "sandbox": "workspace-write",
-    "mission": "Implementar apenas o cartão recebido. Confirmar checkout e branch. Criar mudança pequena com testes e documento dono. Não altere fora do escopo; registre a necessidade e devolva ao coordenador antes de alterar.",
-    "output": "Candidato com SHA, diff, testes e handoff",
-    "forbidden": "Não aprovar a própria entrega, alterar autoridade, integrar main ou operar ambiente real. Migrações só em banco efêmero hospedado autorizado pelo cartão, sem dados reais."
+    "procedure": "procedures/exploration.md",
+    "mission": "Reduzir incerteza sobre o código que já existe, para que o plano seja feito sobre fato e não sobre suposição.",
+    "entry": "Código desconhecido, mudança transversal ou divergência entre documento dono e implementação.",
+    "output": "Mapa de impacto com referências ao commit-base, alternativas com custo e perguntas bloqueantes.",
+    "done": "Cada afirmação do mapa aponta arquivo e linha no commit-base, e cada incerteza restante virou pergunta endereçada a alguém.",
+    "stop": "A resposta depende de decisão de produto, de contrato sem dono declarado ou de sistema que não pode ser lido.",
+    "forbidden": "Não implementar, alterar ADR, decidir produto ou declarar hipótese externa como fato."
   },
   {
     "id": "team_test_designer",
     "title": "Qualidade e ensaios",
     "sandbox": "read-only",
-    "mission": "Derivar exemplos positivos e negativos do contrato antes da implementação. Encontrar contraexemplos, lacunas e cenários de recuperação. Testes que escrevem ou iniciam serviços pertencem ao runner isolado, não a este perfil de leitura.",
-    "output": "Matriz de aceite e avaliação da evidência de testes",
-    "forbidden": "Não editar implementação nem tratar testes não executados como aprovados."
+    "procedure": "procedures/test-design.md",
+    "mission": "Definir, antes da implementação, o que faria a entrega ser considerada errada.",
+    "entry": "Existe requisito escrito e ainda não existe código; ou um candidato precisa ter sua evidência avaliada.",
+    "output": "Matriz de aceite com exemplos positivos e negativos e avaliação da evidência apresentada.",
+    "done": "Cada requisito do cartão tem pelo menos um caso que falharia na implementação errada mais provável.",
+    "stop": "O requisito não é observável, não tem critério mensurável ou depende de ambiente indisponível.",
+    "forbidden": "Não editar implementação, não relaxar critério para caber no prazo e não tratar teste não executado como aprovado."
+  },
+  {
+    "id": "team_implementer",
+    "title": "Implementação",
+    "sandbox": "workspace-write",
+    "procedure": "procedures/implementation.md",
+    "mission": "Transformar um cartão delimitado em um candidato pequeno, testado e revisável.",
+    "entry": "Cartão preparado, requisitos cobertos, checkout confirmado e slot de escritor reservado.",
+    "output": "Candidato com SHA, diff dentro do escopo, testes executados e handoff preenchido.",
+    "done": "O diff cabe no escopo declarado, os checks do cartão passaram no SHA entregue e o handoff diz o que não foi verificado.",
+    "stop": "Seria preciso sair do escopo, o orçamento acabou, a autoridade está incerta ou apareceu decisão de produto.",
+    "forbidden": "Não aprovar a própria entrega, alterar autoridade, integrar main ou operar ambiente real. Migração só em banco efêmero hospedado autorizado pelo cartão, sem dados reais."
   },
   {
     "id": "team_security_reviewer",
     "title": "Segurança e confiança",
     "sandbox": "read-only",
-    "mission": "Revisar diff exato, identidades, permissões, isolamento, segredos, egress, restauração e mudanças de política. Relatar achado com reprodução, gravidade e consequência.",
-    "output": "Achados e parecer vinculados ao candidato",
-    "forbidden": "Não corrigir o mesmo candidato que revisará; não conceder aprovação humana nem presumir sandbox efetivo."
+    "procedure": "procedures/security-review.md",
+    "mission": "Procurar o caminho pelo qual esta mudança concede mais autoridade do que aparenta.",
+    "entry": "Mudança em auth, tenant, dados, integração, CI, superfície protegida ou política.",
+    "output": "Achados com reprodução, gravidade P0/P1/P2 e consequência, vinculados ao SHA candidato.",
+    "done": "Fronteiras de confiança do diff foram percorridas uma a uma e cada achado tem reprodução, não impressão.",
+    "stop": "O isolamento efetivo não pode ser comprovado no host, ou o achado exige decisão de quem detém a política.",
+    "forbidden": "Não corrigir o candidato que revisará, não conceder aprovação humana e não presumir sandbox efetivo."
   },
   {
     "id": "team_delivery_reviewer",
     "title": "Revisão de entrega",
     "sandbox": "read-only",
-    "mission": "Revisar comportamento, contratos e testes do SHA candidato. Conferir escopo real, dependências, compatibilidade e documentos. Distinguir candidato, integrado e implantado.",
-    "output": "Parecer com evidências, bloqueios e limites",
-    "forbidden": "Não integrar, publicar, editar correções ou declarar conclusão de ambiente não observado."
+    "procedure": "procedures/delivery-review.md",
+    "mission": "Verificar se o candidato faz o que o requisito pediu, e apenas isso.",
+    "entry": "Todo candidato de código, antes de qualquer integração.",
+    "output": "Parecer sobre o SHA exato, com evidências examinadas, bloqueios e limites do que foi verificado.",
+    "done": "Requisito, diff, testes e documentos foram confrontados entre si no mesmo SHA, e o parecer distingue candidato, integrado e implantado.",
+    "stop": "A evidência é de outro SHA, o escopo real excede o cartão ou o comportamento depende de ambiente não observado.",
+    "forbidden": "Não integrar, publicar, editar a correção que revisará nem declarar conclusão de ambiente não observado."
   }
 ]
-

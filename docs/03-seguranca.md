@@ -11,7 +11,8 @@ não prova integridade. Uma persona bem instruída não substitui isolamento do 
 | Agente eleva permissões | não aceitar autoridade de cartão/log | schema fechado; ações/ambiente limitados | sandbox/egress e identidade do supervisor |
 | Autor aprova a si | revisor distinto no candidato | rejeição de actor_id igual | revisão autenticada no provedor, sem bypass |
 | Código muda após revisão | vincular SHA, run e contexto | rejeição de evidência obsoleta | checks obrigatórios e revisão invalidada por novos commits |
-| Candidato altera política | revisão sob regra anterior | resultado policy_owner_review_required | ruleset/proprietário humano; CI confiável da base |
+| Candidato altera política | revisão sob regra anterior | `guard` recusa no pre-push e na CI sem trailer `Control-Surface` apontando ADR existente | ruleset/proprietário humano; CI confiável da base |
+| Fatos do candidato vêm do próprio candidato | separar coleta de julgamento | `scripts/observe.mjs` coleta, `src/` julga; ausência nunca vira padrão favorável | runner que o autor não controla; identidade do coletor |
 | Escritor reaparece após timeout | não reatribuir por TTL | modelo impede retry antes de reconciliar | manter reserva, terminar processo e comprovar reconciliação |
 | Caminho escapa do escopo | diretório explícito | rejeição de traversal/drive/UNC e prefixo falso | canonicalização real, symlinks e sandbox |
 | Credencial vaza pelo CI | CI sem segredo de operação | workflow read-only, sem deploy | configuração de Secrets/Environment/runner |
@@ -34,8 +35,13 @@ IDs de tarefa são strings e checks são identificadores, não comandos executá
 
 ## Superfície protegida
 
-AGENTS, perfis, catálogo, política, workflows, validador e testes que validam a política
-exigem revisão destacada antes de adoção. Não usar apenas a versão modificada do validador
+AGENTS, perfis, catálogo, política, workflows, procedimentos, scripts de observação, hooks,
+validador e testes que validam a política exigem revisão destacada antes de adoção, e agora
+também uma declaração explícita no commit (`Control-Surface: docs/adr/NNNN-titulo.md`).
+`guard` confere a forma do caminho e a existência do arquivo; **não lê o conteúdo do ADR**.
+Declarar mal continua possível — fica no histórico, com autor e data, o que torna a fraude
+cara em vez de impossível. O pre-push é conveniência do autor: quem edita o hook pode apagá-lo
+e `--no-verify` o ignora. O que segura é a mesma avaliação na CI. Não usar apenas a versão modificada do validador
 para provar a mudança. Rodar a política da base confiável em executor separado, comparar
 diff completo e obter decisão do dono da política. O próprio CLI não instala esse executor.
 

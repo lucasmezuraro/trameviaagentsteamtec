@@ -25,5 +25,40 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: node --test
       - run: node src/cli.mjs validate examples/plan.json
+      - run: node src/cli.mjs converge examples/plan.json
       - run: node src/cli.mjs simulate
 
+  # Protege a superfície de controle deste repositório. Roda no runner do provedor, não na
+  # máquina de quem escreveu a mudança: é essa separação que faz a regra valer alguma coisa.
+  guard:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+      - name: Observar a mudança
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+          HEAD: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          OBSERVED_AUTHOR: ${{ github.event.pull_request.user.login || github.actor }}
+          # A execução da matriz foi observada por este workflow. Aprovação humana não é
+          # observável aqui e permanece ausente de propósito: ausência vira "não verificado".
+          OBSERVED_CHECKS: tests:passed:${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -eu
+          empty=0000000000000000000000000000000000000000
+          if [ -z "${BASE:-}" ] || [ "$BASE" = "$empty" ] || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            git fetch --no-tags origin "$DEFAULT_BRANCH"
+            BASE=$(git rev-parse FETCH_HEAD)
+          fi
+          node scripts/observe.mjs "$BASE" "$HEAD" --collector github-actions > observation.json
+          cat observation.json
+      - name: Avaliar contra a política
+        run: node src/cli.mjs guard observation.json

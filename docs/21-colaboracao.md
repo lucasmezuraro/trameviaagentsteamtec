@@ -62,3 +62,24 @@
 - Registro acrescentado em commit próprio após os testes; sem mudança em código,
   credenciais, ambientes, serviços ou dados de loja.
 
+## Portões executáveis e missões delimitadas — 2026-09-14
+
+- Autor desta entrega: Claude (Opus 5), a pedido do proprietário. Sem revisor independente.
+- Base: b5d1d3c (origin/main, já contendo a camada de requisito integrada pelo PR #1).
+  Branch de trabalho: claude/executable-gates.
+- **Concorrência observada durante a tarefa.** O checkout compartilhado foi movido por outro
+  agente para `codex/team-foundation` enquanto esta tarefa estava em andamento, e o PR #1 foi
+  integrado a `main`. As alterações em curso foram levadas para branch nova a partir de
+  `origin/main` com `git checkout -b`, sem reset, stash, force ou cópia sobre trabalho alheio.
+  Nenhum commit de terceiro foi movido, reescrito ou descartado.
+- Escopo: `src/gate.mjs`, `src/profiles.mjs`, `scripts/observe.mjs`,
+  `scripts/render-profiles.mjs`, `hooks/pre-push`, `procedures/` (cinco), catálogo de papéis
+  reescrito com cinco fronteiras por missão, política na versão 2, perfis `.codex` gerados,
+  job `guard` na CI, ADR 0002 e atualização de AGENTS, README, docs/01, 02, 03, 06 e 21.
+- Validação pelo autor: 149 testes Node aprovados no Windows com Node 24.18.0 (112 antes,
+  37 acrescentados); `validate`, `converge`, `plan`, `simulate`, `guard` e `gate` executados;
+  observação real deste repositório coletada e submetida ao `guard`.
+- Não verificado: execução do job `guard` no GitHub, revisão independente deste candidato,
+  comportamento do hook fora do Git Bash, e aprovação humana — que a CI, rodando com
+  `contents: read`, não observa e por isso declara como não verificada.
+- Nenhuma autoridade nova foi concedida. A mudança acrescenta recusas e estreita missões.

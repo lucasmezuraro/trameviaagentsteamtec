@@ -1,0 +1,45 @@
+#!/bin/sh
+# Local gate. Refuses to push a change that touches the control surface without declaring it.
+#
+# It is a convenience for the author, not a security control: whoever can edit this file can
+# delete it, and --no-verify skips it. The control that actually holds is the same check
+# running in CI, where the author does not own the runner. Both call the same pure evaluator.
+set -eu
+
+remote_ref_base() {
+  # An unknown remote branch has no base; compare against the default branch instead.
+  if [ "$1" = "0000000000000000000000000000000000000000" ]; then
+    git rev-parse "origin/main^{commit}" 2>/dev/null || git rev-parse "$2^{commit}~1"
+  else
+    echo "$1"
+  fi
+}
+
+status=0
+while read -r _local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue
+  base=$(remote_ref_base "$remote_sha" "$local_sha")
+  observation=$(mktemp) || exit 1
+  trap 'rm -f "$observation"' EXIT
+
+  if ! node scripts/observe.mjs "$base" "$local_sha" --collector local-hook > "$observation"; then
+    echo "pre-push: não foi possível observar $remote_ref; push recusado." >&2
+    exit 1
+  fi
+  if ! node src/cli.mjs guard "$observation"; then
+    cat >&2 <<'MSG'
+
+pre-push: a mudança toca a superfície de controle sem declaração.
+Acrescente ao commit um trailer apontando o ADR que justifica a mudança:
+
+    Control-Surface: docs/adr/NNNN-titulo.md
+
+O ADR precisa existir na árvore. Se a mudança não deveria tocar essa superfície,
+tire-a do commit em vez de declarar. Emitir a declaração é ato do autor e fica no
+histórico; ela não substitui a revisão humana nem a verificação da CI.
+MSG
+    status=1
+  fi
+done
+
+exit $status
