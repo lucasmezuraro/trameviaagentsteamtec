@@ -49,6 +49,10 @@ Redis ou servidor web deverão usar ambiente efêmero hospedado.
 
 ## O que já existe e o que falta
 
+A [auditoria de maturidade](docs/09-auditoria-de-maturidade.md) de 2026-09-14 identificou
+lacunas reproduzíveis em skills, coleta e checks de requisitos. A CI passou, mas a main foi
+observada sem proteção efetiva. O time ainda não está aprovado para operação sem supervisão.
+
 | Entrega | Situação |
 |---|---|
 | Papéis, escopo, transferência de contexto e incidentes | Contratos versionados |
@@ -79,6 +83,8 @@ Redis ou servidor web deverão usar ambiente efêmero hospedado.
   e [ADR 0003](docs/adr/0003-skills-tecnicas-e-governanca-de-papeis.md) (skills por papel e planos fixados ao catálogo).
 - [Fontes](docs/07-fontes.md): documentação primária e data de consulta.
 - [Registro de entrega](docs/21-colaboracao.md): base, revisão, validações e pendências.
+- [Auditoria de maturidade](docs/09-auditoria-de-maturidade.md): primeiro comando, achados,
+  evidências e critérios para ampliar autonomia.
 
 Autonomia cresce por evidência. Mais agentes e mais tokens não substituem um contrato
 pequeno, uma revisão com contraexemplo e testes sobre o commit que será integrado.
