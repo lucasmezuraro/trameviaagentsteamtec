@@ -114,3 +114,20 @@
   comportamento do hook fora do Git Bash, e aprovação humana — que a CI, rodando com
   `contents: read`, não observa e por isso declara como não verificada.
 - Nenhuma autoridade nova foi concedida. A mudança acrescenta recusas e estreita missões.
+
+## Especificação do executor T5 — 2026-09-14
+
+- Autor desta entrega: Claude (Opus 5), a pedido do proprietário. Sem revisor independente.
+- Base: 65ace38dd1977755dda42291c0f52252df8f7186 (origin/main, já com PR #2 e PR #3
+  integrados). Branch de trabalho: claude/t5-executor-spec.
+- Escopo: apenas `specs/t5-executor/` e documentação. Nenhum arquivo da superfície de
+  controle foi tocado, portanto esta mudança não carrega trailer `Control-Surface`.
+- Primeiro uso real da camada de requisito sobre o próprio time: a fatia 1 (contrato do
+  executor) valida, escalona em duas rodadas e cobre 5 requisitos com 0 lacuna; a fatia 2
+  (hospedagem, identidade e orçamento) é recusada por carregar quatro dúvidas abertas.
+- Validação pelo autor: `validate`, `plan` e `converge` executados sobre a fatia 1;
+  `validate` da fatia 2 recusado com código 1; `node --test` aprovado; observação real
+  coletada e submetida ao `guard`.
+- Não verificado: o executor em si não foi implementado — esta entrega é especificação e
+  plano. As quatro dúvidas da fatia 2 continuam sem resposta e são decisão do fundador.
+- Nenhuma autoridade nova foi concedida.
