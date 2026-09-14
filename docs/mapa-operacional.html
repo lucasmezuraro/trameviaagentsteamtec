@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Tramevia · Como o time de agentes trabalha</title>
+<style>
+:root{--ink:#173537;--muted:#4a6262;--paper:#f4f3ed;--line:#ccd7d2;--teal:#176458;--orange:#a34323}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--teal);text-underline-offset:4px}a:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:5px}
+.wrap{max-width:1150px;margin:auto;padding:0 30px}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:750}
+header{padding:52px 0 32px;border-bottom:1px solid var(--line)}.brand{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.tag{display:inline-block;border:1px solid var(--teal);border-radius:30px;padding:4px 13px;font-size:12px;font-weight:700}
+h1{font-size:clamp(36px,6vw,70px);line-height:1.05;letter-spacing:-.04em;max-width:850px;margin:34px 0 22px;font-weight:650}
+.lead{max-width:800px;font-size:20px;color:var(--muted)}nav{display:flex;flex-wrap:wrap;gap:12px 28px;margin:26px 0 10px}
+section{padding:48px 0;border-bottom:1px solid var(--line)}h2{font-size:32px;line-height:1.18;letter-spacing:-.025em;margin:8px 0 18px}
+h3{font-size:19px;margin:5px 0 10px}p{margin:9px 0 18px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fffdf7;border:1px solid var(--line);border-radius:16px;padding:24px}.card p{font-size:15px}
+.number{font-size:12px;color:var(--teal);font-weight:800;letter-spacing:.1em}
+.note{padding:18px 22px;background:#e1ebe4;border-left:4px solid var(--teal);border-radius:0 10px 10px 0;margin:24px 0}
+.warn{background:#fae7d7;border-color:var(--orange)}.muted{color:var(--muted)}.small{font-size:14px}
+.flow{list-style:none;margin:28px 0;padding:0;counter-reset:step}.flow li{display:grid;grid-template-columns:52px 1fr;gap:20px;padding-bottom:28px;position:relative}
+.flow li:before{counter-increment:step;content:counter(step,decimal-leading-zero);background:var(--teal);color:white;width:46px;height:46px;display:grid;place-items:center;border-radius:50%;font-weight:750}
+.flow li:not(:last-child):after{content:"↓";position:absolute;top:49px;left:16px;color:var(--teal);font-size:25px}
+.flow article{border-bottom:1px solid var(--line);padding:0 0 15px}.flow p{margin-bottom:8px}
+.lane{display:grid;grid-template-columns:1fr 55px 1.5fr 55px 1fr;align-items:center;text-align:center;gap:8px;margin:26px 0}
+.lane .box{border:1px solid var(--line);background:#fffdf7;padding:20px;border-radius:13px}.arrow{font-size:28px;color:var(--teal)}
+details{background:#fffdf7;border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:12px 0}
+summary{cursor:pointer;font-weight:700}details p{margin:16px 0 4px}.table{overflow:auto}table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;border-bottom:1px solid var(--line);padding:14px 15px;vertical-align:top}th{background:#e1ebe4}
+code{font-size:.88em;background:#e4e9e2;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}
+footer{padding:35px 0 55px;font-size:14px}.status{font-weight:700;color:var(--orange)}
+@media(max-width:760px){.wrap{padding:0 20px}.grid{grid-template-columns:1fr}.lane{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}h2{font-size:28px}.flow li{gap:12px;grid-template-columns:46px 1fr}.brand{gap:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{body{background:white;font-size:12pt}nav{display:none}.wrap{max-width:none}section{break-inside:avoid}.grid{grid-template-columns:1fr 1fr}.card{break-inside:avoid}h1{font-size:36pt}details{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="brand"><span class="eyebrow">TRAMEVIA / ENGENHARIA POR AGENTES</span><span class="tag">FUNDAÇÃO v0.1 · OPERAÇÃO SUPERVISIONADA</span></div>
+<h1>Você define o resultado.<br>O time constrói com evidências.</h1>
+<p class="lead">Um guia para entender quem trabalha, em qual sequência, o que você recebe e o que impede uma mudança de chegar ao lugar errado.</p>
+<p class="small"><strong>Este mapa é didático.</strong> Não mostra agentes ao vivo. Perfis e laboratório existem no repositório; executor contínuo, permissões externas e operação de produção ainda dependem de ativação.</p>
+<nav aria-label="Seções"><a href="#time">O time</a><a href="#sequencia">Passo a passo</a><a href="#limites">Limites</a><a href="#falhas">Se algo falhar</a><a href="#primeira">Primeira tarefa</a></nav>
+</div></header>
+<main class="wrap">
+<section id="time"><span class="eyebrow">01 / PAPÉIS</span><h2>Uma equipe pequena. Um responsável por cada decisão.</h2>
+<div class="lane" aria-label="Você orienta o coordenador, que organiza especialistas e devolve uma entrega revisada">
+<div class="box"><strong>Você</strong><br><span class="small">Prioridade, produto e autorização operacional</span></div><div class="arrow" aria-hidden="true">→</div>
+<div class="box"><strong>Coordenador</strong><br><span class="small">Cartão → especialistas → evidências → integração</span></div><div class="arrow" aria-hidden="true">→</div>
+<div class="box"><strong>Entrega revisável</strong><br><span class="small">Commit, testes, revisão e pendências</span></div></div>
+<div class="grid">
+<article class="card"><span class="number">INVESTIGAR</span><h3>Explorador</h3><p>Lê o projeto, identifica o dono da regra e localiza dependências. Entrega um mapa; não muda o produto.</p></article>
+<article class="card"><span class="number">CONSTRUIR</span><h3>Implementador</h3><p>Altera só os arquivos do cartão e testa a mudança. Um escritor por rodada inicial, com branch e checkout confirmados.</p></article>
+<article class="card"><span class="number">PROVAR</span><h3>Especialista em testes</h3><p>Explica como detectar uma implementação errada. Define os casos de sucesso, falha e recuperação antes de confiar no resultado.</p></article>
+<article class="card"><span class="number">QUESTIONAR</span><h3>Revisor de segurança</h3><p>Procura fuga de permissão, dados expostos, confusão de identidade e retorno inseguro após uma queda.</p></article>
+<article class="card"><span class="number">CONFERIR</span><h3>Revisor de entrega</h3><p>Compara contrato, diff e testes da versão exata. Se houver correção, a nova versão precisa de revisão.</p></article>
+<article class="card"><span class="number">OPERAR</span><h3>Responsável por release</h3><p>É uma responsabilidade humana nesta fase. Autoriza promoção e recuperação no ambiente certo, após seus portões.</p></article>
+</div>
+<div class="note">Até <strong>três especialistas ativos</strong>, além do coordenador. Não é necessário chamar todos para toda tarefa. Personas diferentes ajudam a revisão, mas não criam identidades de segurança independentes.</div>
+</section>
+<section id="sequencia"><span class="eyebrow">02 / UM EXEMPLO CONCRETO</span><h2>“Quero que a loja A não veja os dados da loja B.”</h2>
+<p class="muted">Este é um exemplo de tarefa futura do MVP. O sistema de lojas ainda não foi implementado por esta fundação.</p>
+<ol class="flow">
+<li><article><h3>Transformar a intenção em um cartão</h3><p>O coordenador registra: objetivo, repositório, commit-base, arquivos permitidos, testes, tempo máximo e condição de parada.</p><p class="small"><strong>Você recebe:</strong> uma tarefa compreensível com resultado verificável.</p></article></li>
+<li><article><h3>Descobrir a regra e preparar a prova</h3><p>Explorador lê o contrato de isolamento. Especialista em testes define: A tenta ler B, vincular registro de B e reutilizar uma conexão que antes atendia B.</p><p class="small"><strong>Saída:</strong> plano consolidado e cenários que precisam falhar com acesso negado.</p></article></li>
+<li><article><h3>Confirmar o espaço de trabalho</h3><p>Coordenador verifica branch, checkout e ausência de outro escritor. Dizer “use worktree” não cria uma worktree. Testes de banco ocorrerão em ambiente hospedado descartável.</p><p class="small"><strong>Limite:</strong> sem servidor, túnel ou banco de cliente no seu PC.</p></article></li>
+<li><article><h3>Construir uma mudança pequena</h3><p>Implementador altera a política de acesso e seus testes. Se precisar mudar a arquitetura ou sair dos arquivos combinados, devolve a necessidade antes de alterar.</p><p class="small"><strong>Saída:</strong> candidato identificado pelo SHA, que é o identificador do commit.</p></article></li>
+<li><article><h3>Testar e revisar exatamente essa versão</h3><p>Os testes e os revisores apontam para o mesmo candidato, tentativa e política. Um relatório verde do commit anterior não serve. O autor não aprova sua própria entrega.</p><p class="small"><strong>Se falhar:</strong> correção delimitada → novo commit → novos testes e revisão.</p></article></li>
+<li><article><h3>Integrar com rastreabilidade</h3><p>O coordenador confere as evidências. Se a base mudou, reconcilia em branch própria e valida o resultado. Só então a tarefa dependente pode usar essa mudança.</p><p class="small"><strong>Você recebe:</strong> o que mudou, o que foi testado, quem revisou e o que permanece pendente.</p></article></li>
+<li><article><h3>Decidir a promoção de ambiente</h3><p>Integrado não significa implantado. DEV, HOM e PROD são etapas de promoção de um artefato identificado. Produção mantém autorização e identidade próprias.</p><p class="small"><strong>Nesta entrega:</strong> existe workflow de testes do time; não existe deploy do MVP.</p></article></li>
+</ol></section>
+<section id="limites"><span class="eyebrow">03 / AUTONOMIA COM FRONTEIRAS</span><h2>O que permite seguir — e o que bloqueia.</h2>
+<div class="table"><table><thead><tr><th>Uma tentativa…</th><th>O laboratório demonstra</th><th>O controle real precisa</th></tr></thead><tbody>
+<tr><td>…pede produção no cartão</td><td>Ambiente recusado</td><td>Sandbox, identidade e credencial sem acesso PROD</td></tr>
+<tr><td>…usa revisão antiga</td><td>Candidato e contexto incompatíveis são bloqueados</td><td>Fonte confiável do run atual e revisão autenticada</td></tr>
+<tr><td>…muda a própria regra</td><td>Escopo protegido exige revisão do responsável</td><td>Política-base e proteção externa que o autor não contorna</td></tr>
+<tr><td>…expira e tenta reiniciar</td><td>Retry bloqueado antes da reconciliação</td><td>Supervisor encerra processo antigo e mantém reserva</td></tr>
+<tr><td>…altera fora dos arquivos</td><td>Escopo lexical recusado</td><td>Sandbox e caminhos reais, inclusive symlinks e renomes</td></tr>
+</tbody></table></div>
+<div class="note warn"><strong>Três coisas diferentes:</strong> uma regra escrita orienta; um teste prova um caso; um controle de execução impede uma ação. O projeto registra qual dessas evidências existe para cada limite.</div>
+</section>
+<section id="falhas"><span class="eyebrow">04 / PARADA E RETOMADA</span><h2>Uma queda não autoriza começar tudo de novo.</h2>
+<details><summary>O agente parou de responder. Outro assume?</summary><p>Primeiro o estado vira <code>interrupted_unknown</code>: o escritor pode ainda estar vivo. O supervisor precisa confirmar encerramento e conferir o checkout. Só depois cria nova tentativa. Uma resposta antiga não altera a tentativa atual.</p></details>
+<details><summary>O teste falhou ou não conseguiu rodar?</summary><p>A tarefa permanece bloqueada para integração. O time distingue defeito de código e indisponibilidade de infraestrutura, preserva evidências e corrige dentro do orçamento. Um teste não executado não conta como aprovado.</p></details>
+<details><summary>O limite de tempo ou de tentativas acabou?</summary><p>O time entrega o estado do trabalho, o último commit, o bloqueio e o próximo passo. Não entra em um ciclo sem fim. Retomar exige escopo e orçamento adequados; consumo não medido é informado como indisponível.</p></details>
+<details><summary>Perdemos a máquina ou o histórico da sessão?</summary><p>Recomeçar por clone, cartão e handoff verificados. Reexecutar ensaios necessários e usar novo run. Autorizações antigas não são reativadas por restauração. Backup do time e backup do banco da lojista são políticas diferentes.</p></details>
+</section>
+<section id="primeira"><span class="eyebrow">05 / ATIVAR SEM PULAR ETAPAS</span><h2>A primeira rodada é pequena e demonstrável.</h2>
+<div class="grid">
+<article class="card"><span class="number">AGORA</span><h3>Ler e ensaiar</h3><p>Abra o repositório no Codex, confira os perfis e execute o laboratório: <code>node --test</code> e <code>node src/cli.mjs simulate</code>.</p></article>
+<article class="card"><span class="number">EM SEGUIDA</span><h3>Uma tarefa completa</h3><p>Um cartão, um escritor, um candidato, uma revisão. Comprove sandbox e check remoto antes de tratar os controles como ativos.</p></article>
+<article class="card"><span class="number">POR EVIDÊNCIA</span><h3>Primeira fatia do MVP</h3><p>Use o adaptador Tramevia. Comece pela fundação e leitura/cálculo; publicação Nuvemshop continua sujeita aos portões do produto.</p></article>
+</div>
+<p class="status">Não há agentes ao vivo, telemetria, chamada de modelo ou deploy sendo executados por esta página.</p>
+<p>Detalhes: <a href="01-modelo-operacional.md">papéis</a> · <a href="02-workflow.md">workflow</a> · <a href="03-seguranca.md">segurança</a> · <a href="04-observabilidade-e-recuperacao.md">recuperação</a> · <a href="05-ativacao-e-backlog.md">ativação</a>.</p>
+</section>
+</main>
+<footer class="wrap">Tramevia · Time técnico de agentes · 14 de setembro de 2026<br>Arquivo autônomo, sem scripts externos, cookies, formulários, servidor ou coleta de dados.</footer>
+</body></html>
+

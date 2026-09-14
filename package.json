@@ -1,0 +1,16 @@
+{
+  "name": "tramevia-agent-team",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "test": "node --test",
+    "validate": "node src/cli.mjs validate examples/plan.json",
+    "plan": "node src/cli.mjs plan examples/plan.json",
+    "demo": "node src/cli.mjs simulate"
+  }
+}
+

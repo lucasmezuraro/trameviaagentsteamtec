@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "maxTasks": 30,
+  "maxActive": 3,
+  "maxWriters": 1,
+  "maxAttempts": 2,
+  "maxMinutes": 45,
+  "environments": [
+    "offline"
+  ],
+  "actions": [
+    "read",
+    "edit",
+    "test"
+  ],
+  "repositories": [
+    "lucasmezuraro/trameviaagentsteamtec",
+    "lucasmezuraro/tramevia"
+  ],
+  "protectedPaths": [
+    "AGENTS.md",
+    "team/",
+    ".codex/",
+    ".github/",
+    "src/",
+    "test/"
+  ],
+  "requiredChecks": [
+    "tests",
+    "scope",
+    "review"
+  ],
+  "externalExecution": false
+}

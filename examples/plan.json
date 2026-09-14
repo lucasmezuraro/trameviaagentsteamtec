@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "repository": "lucasmezuraro/tramevia",
+  "baseSha": "ef6a1242c9a57d09eb1c675b4cb1bed5368a8a0c",
+  "tasks": [
+    {
+      "id": "F0-MAP",
+      "objective": "Mapear limites do núcleo de ATP",
+      "role": "team_explorer",
+      "dependsOn": [],
+      "paths": [
+        "packages/core/"
+      ],
+      "resources": [
+        "core-contract"
+      ],
+      "actions": [
+        "read"
+      ],
+      "environment": "offline",
+      "checks": [
+        "contract-map"
+      ],
+      "maxAttempts": 1,
+      "maxMinutes": 20
+    },
+    {
+      "id": "F0-TEST",
+      "objective": "Desenhar contraexemplo de quota compartilhada",
+      "role": "team_test_designer",
+      "dependsOn": [],
+      "paths": [
+        "packages/core/"
+      ],
+      "resources": [
+        "core-contract"
+      ],
+      "actions": [
+        "read"
+      ],
+      "environment": "offline",
+      "checks": [
+        "negative-oracle"
+      ],
+      "maxAttempts": 1,
+      "maxMinutes": 20
+    },
+    {
+      "id": "F0-CORE",
+      "objective": "Implementar cálculo puro de demonstração; sem integração externa",
+      "role": "team_implementer",
+      "dependsOn": [
+        "F0-MAP",
+        "F0-TEST"
+      ],
+      "paths": [
+        "packages/core/",
+        "tests/core/"
+      ],
+      "resources": [
+        "core-contract"
+      ],
+      "actions": [
+        "read",
+        "edit",
+        "test"
+      ],
+      "environment": "offline",
+      "checks": [
+        "quota-invariant"
+      ],
+      "maxAttempts": 2,
+      "maxMinutes": 45
+    }
+  ]
+}
