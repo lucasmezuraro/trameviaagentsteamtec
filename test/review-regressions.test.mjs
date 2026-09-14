@@ -22,9 +22,9 @@ test('SHA do candidato precisa coincidir com o observado pelo supervisor', () =>
 test('processo observado como unknown não é completado por alegação do autor', () => {
   assert.ok(assess(fresh(),{...expected,state:'interrupted_unknown'}).reasons.includes('current_run_mismatch'));
 });
-test('mudança de catálogo invalida candidato mesmo sem mudar policy.json', () => {
+test('mudança de catálogo invalida o plano antes de julgar o candidato', () => {
   const r = structuredClone(roles); r[0].sandbox = 'workspace-write';
-  assert.ok(assess(fresh(),expected,r).reasons.includes('candidate_context_mismatch'));
+  assert.throws(() => assess(fresh(),expected,r), /outro catálogo de papéis/);
 });
 for (const [name, mutation] of [
   ['check nulo', c => { c.checks = [null]; }],

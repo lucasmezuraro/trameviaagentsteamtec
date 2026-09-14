@@ -1,5 +1,36 @@
 # Registro de colaboração
 
+## Revisão de cobertura de skills — 2026-09-14
+
+- Autor: Codex, solicitado pelo proprietário. Base: `cc222ed` em `origin/main`; continuação na
+  branch `codex/role-skills-hardening`, que já continha o ADR 0003.
+- Escopo: revisão do catálogo e do adaptador Tramevia; inclusão de skills para dados/tenant,
+  integração confiável, resiliência/recuperação e CI/CD/cadeia de suprimentos; atualização do
+  mapa de papéis, do digest do exemplo e ADR 0004.
+- Validação: perfis regenerados; 151 testes Node aprovados; `validate`, `converge`, `plan` e
+  `simulate` aprovados sobre o exemplo com novo digest; `git diff --check` limpo. Observação e
+  publicação serão feitas apenas após o commit, sobre o SHA final.
+- Não houve acesso a segredo, fornecedor, Nuvemshop, banco, ambiente, porta, deploy ou dado de
+  cliente. A revisão é de desenho e controles versionados; comprovação operacional permanece
+  trabalho futuro autorizado.
+
+## Skills técnicas e endurecimento de governança — 2026-09-14
+
+- Autor: Codex, a pedido do proprietário. Base remota sincronizada em `cc222ed` antes da
+  alteração; branch de trabalho `codex/role-skills-hardening`. Nenhum trabalho do peer foi
+  descartado ou sobrescrito.
+- Escopo: skills locais para descoberta, Node/web, qualidade e segurança; associação
+  versionada por papel; perfis Codex regenerados; plano v3 fixado também ao `rolesDigest`;
+  ADR 0003, fontes e guia operacional atualizados.
+- Validação: `node scripts/render-profiles.mjs`; 150 testes Node aprovados; `validate`,
+  `converge`, `plan` e `simulate` aprovados sobre o exemplo v3; links locais e sincronia de
+  perfis cobertos pelos testes; `git diff --check` limpo. A tentativa de parsear TOML com o
+  launcher Python do host foi recusada pelo sistema antes de executar; a verificação estrutural
+  disponível é a geração e comparação determinística dos perfis pelo teste.
+- Limites: não houve segredo, conta, porta, serviço, deploy, acesso Nuvemshop, dado de cliente
+  ou ensaio de host. Descoberta real de skills e aplicação de sandbox permanecem verificações
+  de host, não propriedades provadas por estes arquivos.
+
 ## Fundação do time — 2026-09-14
 
 - Autor/integrador desta entrega: Codex, tarefa solicitada pelo proprietário.

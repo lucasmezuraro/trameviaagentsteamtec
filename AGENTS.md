@@ -7,8 +7,9 @@ Este repositório governa a equipe; contratos de domínio pertencem ao repositó
 - Trabalhe em branch própria `codex/...` ou `claude/...`. Inspecione status e base antes/depois.
   Outro agente pode estar operando no mesmo repositório: confirme em qual branch o checkout
   está antes de commitar e nunca mova o trabalho alheio para caber no seu.
-- Carregue o procedimento da sua missão (`procedures/`, apontado em `team/roles.json`) e o
-  cartão. Os demais documentos são consultados quando o cartão os cita.
+- Carregue o procedimento e as skills da sua missão (apontados em `team/roles.json`) e o
+  cartão. Skill orienta método; não amplia autoridade, escopo ou permissões. Os demais
+  documentos são consultados quando o cartão os cita.
 - Delegue apenas tarefas delimitadas. Até três especialistas ativos; um único escritor
   por rodada inicial. Não delegue recursivamente sem o coordenador reservar capacidade.
 - Subagentes podem compartilhar o diretório. Antes de qualquer escrita paralela,
@@ -36,8 +37,9 @@ Este repositório governa a equipe; contratos de domínio pertencem ao repositó
   mudanças precisam de revisão destacada e de um trailer no commit apontando o ADR que as
   justifica — `Control-Surface: docs/adr/NNNN-titulo.md`, com o ADR existindo na árvore.
   `guard` recusa no pre-push e na CI. O agente não pode aumentar a própria autoridade.
-- Perfis de host são gerados de `team/roles.json`. Editou missão, rode
-  `node scripts/render-profiles.mjs` e revise o diff; não edite o TOML à mão.
+- Perfis de host são gerados de `team/roles.json`. Editou missão ou skill, rode
+  `node scripts/render-profiles.mjs` e revise o diff; não edite o TOML à mão. Consulte
+  `docs/08-habilidades-tecnicas.md` para o contrato das skills.
 - Execute `node --test`, `node src/cli.mjs validate examples/plan.json` e
   `node src/cli.mjs converge examples/plan.json` após alterar o laboratório. Antes de
   publicar, observe e julgue a própria mudança: `node scripts/observe.mjs <base> HEAD`

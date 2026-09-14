@@ -3,6 +3,11 @@
     "id": "team_explorer",
     "title": "Exploração e arquitetura",
     "sandbox": "read-only",
+    "skills": [
+      "tramevia-architecture-discovery",
+      "tramevia-data-tenancy",
+      "tramevia-integration-reliability"
+    ],
     "procedure": "procedures/exploration.md",
     "mission": "Reduzir incerteza sobre o código que já existe, para que o plano seja feito sobre fato e não sobre suposição.",
     "entry": "Código desconhecido, mudança transversal ou divergência entre documento dono e implementação.",
@@ -15,6 +20,12 @@
     "id": "team_test_designer",
     "title": "Qualidade e ensaios",
     "sandbox": "read-only",
+    "skills": [
+      "tramevia-quality-assurance",
+      "tramevia-data-tenancy",
+      "tramevia-integration-reliability",
+      "tramevia-resilience-recovery"
+    ],
     "procedure": "procedures/test-design.md",
     "mission": "Definir, antes da implementação, o que faria a entrega ser considerada errada.",
     "entry": "Existe requisito escrito e ainda não existe código; ou um candidato precisa ter sua evidência avaliada.",
@@ -27,6 +38,13 @@
     "id": "team_implementer",
     "title": "Implementação",
     "sandbox": "workspace-write",
+    "skills": [
+      "tramevia-node-web",
+      "tramevia-quality-assurance",
+      "tramevia-data-tenancy",
+      "tramevia-integration-reliability",
+      "tramevia-ci-cd-supply-chain"
+    ],
     "procedure": "procedures/implementation.md",
     "mission": "Transformar um cartão delimitado em um candidato pequeno, testado e revisável.",
     "entry": "Cartão preparado, requisitos cobertos, checkout confirmado e slot de escritor reservado.",
@@ -39,6 +57,12 @@
     "id": "team_security_reviewer",
     "title": "Segurança e confiança",
     "sandbox": "read-only",
+    "skills": [
+      "tramevia-security-review",
+      "tramevia-data-tenancy",
+      "tramevia-integration-reliability",
+      "tramevia-ci-cd-supply-chain"
+    ],
     "procedure": "procedures/security-review.md",
     "mission": "Procurar o caminho pelo qual esta mudança concede mais autoridade do que aparenta.",
     "entry": "Mudança em auth, tenant, dados, integração, CI, superfície protegida ou política.",
@@ -51,6 +75,12 @@
     "id": "team_delivery_reviewer",
     "title": "Revisão de entrega",
     "sandbox": "read-only",
+    "skills": [
+      "tramevia-quality-assurance",
+      "tramevia-security-review",
+      "tramevia-resilience-recovery",
+      "tramevia-ci-cd-supply-chain"
+    ],
     "procedure": "procedures/delivery-review.md",
     "mission": "Verificar se o candidato faz o que o requisito pediu, e apenas isso.",
     "entry": "Todo candidato de código, antes de qualquer integração.",

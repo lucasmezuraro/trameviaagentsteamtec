@@ -132,9 +132,28 @@ test('toda missão é completa e aponta um procedimento existente', () => {
       assert.ok(typeof role[field] === 'string' && role[field].trim().length > 20, role.id + '.' + field);
     assert.match(role.procedure, /^procedures\/[a-z-]+\.md$/);
     assert.ok(existsSync(new URL('../' + role.procedure, import.meta.url)), role.procedure);
+    assert.ok(Array.isArray(role.skills) && role.skills.length, role.id + '.skills ausente');
+    for (const skill of role.skills)
+      assert.ok(existsSync(new URL('../.agents/skills/' + skill + '/SKILL.md', import.meta.url)),
+        role.id + ': skill ausente: ' + skill);
     assert.ok(['read-only','workspace-write'].includes(role.sandbox));
   }
   assert.equal(roles.filter(r => r.sandbox === 'workspace-write').length, 1, 'mais de um papel com escrita');
+});
+test('papéis mantêm cobertura mínima para os riscos do MVP', () => {
+  const required = {
+    team_explorer: ['tramevia-architecture-discovery','tramevia-data-tenancy','tramevia-integration-reliability'],
+    team_test_designer: ['tramevia-quality-assurance','tramevia-data-tenancy','tramevia-integration-reliability','tramevia-resilience-recovery'],
+    team_implementer: ['tramevia-node-web','tramevia-data-tenancy','tramevia-integration-reliability','tramevia-ci-cd-supply-chain'],
+    team_security_reviewer: ['tramevia-security-review','tramevia-data-tenancy','tramevia-integration-reliability','tramevia-ci-cd-supply-chain'],
+    team_delivery_reviewer: ['tramevia-quality-assurance','tramevia-security-review','tramevia-resilience-recovery','tramevia-ci-cd-supply-chain']
+  };
+  for (const [roleId, skills] of Object.entries(required)) {
+    const role = roles.find(item => item.id === roleId);
+    assert.ok(role, roleId + ': papel ausente');
+    for (const skill of skills)
+      assert.ok(role.skills.includes(skill), roleId + ': skill essencial ausente: ' + skill);
+  }
 });
 test('texto de missão com aspas quebraria o perfil e é recusado na geração', () => {
   assert.throws(() => renderProfile({...roles[0], mission:'faça "tudo"'}), /aspas/);

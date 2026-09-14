@@ -71,9 +71,12 @@ Redis ou servidor web deverão usar ambiente efêmero hospedado.
 - [Revisão e decisões](docs/06-revisao-e-decisoes.md): achados e limites da fundação.
 - [Adaptador Tramevia](projects/tramevia.md): contratos do produto e sequência de adoção.
 - [Procedimentos](procedures/): o passo a passo de cada missão, carregado por quem a executa.
+- [Skills técnicas](docs/08-habilidades-tecnicas.md): método versionado para descoberta,
+  Node/web, qualidade e segurança, vinculado a cada papel.
 - [Especificação](templates/spec.md), [cartão](templates/task.md), [handoff](templates/handoff.md), [incidente](templates/incident.md).
 - Decisões arquiteturais: [ADR 0001](docs/adr/0001-adocao-parcial-do-spec-kit.md) (requisito antes do plano)
-  e [ADR 0002](docs/adr/0002-portoes-executaveis-e-missoes.md) (portões que recusam e missões delimitadas).
+  [ADR 0002](docs/adr/0002-portoes-executaveis-e-missoes.md) (portões que recusam e missões delimitadas)
+  e [ADR 0003](docs/adr/0003-skills-tecnicas-e-governanca-de-papeis.md) (skills por papel e planos fixados ao catálogo).
 - [Fontes](docs/07-fontes.md): documentação primária e data de consulta.
 - [Registro de entrega](docs/21-colaboracao.md): base, revisão, validações e pendências.
 

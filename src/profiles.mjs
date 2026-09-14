@@ -1,7 +1,7 @@
 // Host profiles are derived from team/roles.json, never written by hand: two descriptions of
 // the same mission drift, and the one the agent actually loads is the one nobody reviewed.
 // A test regenerates these and fails on any difference.
-import { fail, nonempty, object } from './schema.mjs';
+import { fail, nonempty, object, list } from './schema.mjs';
 
 // Rules that hold for every mission. They are repeated in each profile because the agent
 // loads one file, not the catalogue.
@@ -23,6 +23,9 @@ export function renderProfile(role) {
   if (!object(role)) fail('papel inválido');
   for (const field of ['id','title','sandbox','procedure','mission','entry','output','done','stop','forbidden'])
     bare(role[field], role.id + '.' + field);
+  list(role.skills, role.id + '.skills');
+  if (!role.skills.every(skill => /^tramevia-[a-z0-9-]+$/.test(skill)))
+    fail(role.id + '.skills: identificador de skill inválido');
   const body = [
     'Missão: ' + role.mission,
     'Quando você entra: ' + role.entry,
@@ -31,6 +34,7 @@ export function renderProfile(role) {
     'Concluído quando: ' + role.done,
     'Pare e devolva ao coordenador quando: ' + role.stop,
     'Proibido: ' + role.forbidden,
+    'Skills do repositório para esta missão: ' + role.skills.map(skill => '$' + skill).join(', ') + '. Leia a SKILL.md aplicável antes de agir; a skill não amplia autoridade nem escopo.',
     ...COMMON
   ].join('\n');
   return [
