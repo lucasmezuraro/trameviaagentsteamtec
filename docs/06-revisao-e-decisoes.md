@@ -20,6 +20,10 @@ dessas histórias foi feita; nenhum aceite de outro agente de produto foi presum
   existente. O que entrou, o que foi recusado e por quê está no
   [ADR 0001](adr/0001-adocao-parcial-do-spec-kit.md). A autonomia cresce porque o agente
   passa a ter contra o que se conferir; não porque ganhou permissão nova.
+- D07: regra que não recusa não é regra. Coleta e julgamento ficam em processos separados,
+  a superfície de controle exige declaração no commit, e nenhum resultado se chama aprovado.
+  Missão delimitada em cinco fronteiras e procedimento por papel no lugar de leitura total.
+  [ADR 0002](adr/0002-portoes-executaveis-e-missoes.md).
 
 ## Achados incorporados
 
@@ -71,3 +75,26 @@ Cinco lacunas fechadas, todas com ensaio negativo em test/spec-driven.test.mjs:
 Limite honesto: `converge` confronta o plano consigo mesmo. Confrontar a especificação com
 o código que existe de fato é trabalho do executor da onda T5 e continua pendente. O léxico
 de termos vagos é heurística: recusa enunciado provavelmente inútil, não certifica o aceito.
+
+## Quarta revisão: a regra que ninguém aplicava
+
+Até aqui o time tinha um modelo capaz de julgar um candidato e nenhum candidato real para
+julgar: a evidência era sintética e vinha de quem estava sendo avaliado. Todas as regras
+eram texto que o modelo podia ignorar sem custo. R01 já apontava a confusão entre instrução
+e isolamento; ela seguia aberta porque nada, fora do alcance do agente, recusava nada.
+
+Cinco lacunas fechadas, com ensaio negativo em test/gate.test.mjs:
+
+| ID | Lacuna | Tratamento |
+|---|---|---|
+| R18 P0 | o julgado fornecia os fatos sobre si mesmo | coleta em `scripts/observe.mjs`, julgamento em `src/`, processos separados |
+| R19 P0 | superfície de controle mudava sem declaração | `guard` exige trailer `Control-Surface` com ADR existente; recusa com código 1 |
+| R20 P1 | ausência de evidência virava resultado favorável | tudo que o coletor não viu entra em `unverified`; sucesso se chama `clear_on_observable_facts` |
+| R21 P1 | missão sem entrada, conclusão nem parada | cinco fronteiras por papel em `team/roles.json`, com teste de completude |
+| R22 P1 | perfil do host e catálogo divergiam em silêncio | perfis gerados do catálogo; teste falha em qualquer diferença |
+
+Limites honestos: `guard` confere a forma e a existência do ADR declarado, não o conteúdo.
+A CI roda com `contents: read` e não consulta a API de revisões, então aprovação humana
+continua **não observada** — fechar isso depende de proteção de branch configurada pelo
+proprietário. E nada disto torna o time autônomo: continua sem despacho, sem execução e sem
+orçamento medido. O portão só garante que sair do combinado custe uma recusa.

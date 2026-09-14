@@ -5,6 +5,10 @@ adaptador do projeto e seus documentos donos na revisão fixada no cartão.
 Este repositório governa a equipe; contratos de domínio pertencem ao repositório do produto.
 
 - Trabalhe em branch própria `codex/...` ou `claude/...`. Inspecione status e base antes/depois.
+  Outro agente pode estar operando no mesmo repositório: confirme em qual branch o checkout
+  está antes de commitar e nunca mova o trabalho alheio para caber no seu.
+- Carregue o procedimento da sua missão (`procedures/`, apontado em `team/roles.json`) e o
+  cartão. Os demais documentos são consultados quando o cartão os cita.
 - Delegue apenas tarefas delimitadas. Até três especialistas ativos; um único escritor
   por rodada inicial. Não delegue recursivamente sem o coordenador reservar capacidade.
 - Subagentes podem compartilhar o diretório. Antes de qualquer escrita paralela,
@@ -28,10 +32,16 @@ Este repositório governa a equipe; contratos de domínio pertencem ao repositó
 - Não envie mensagens externas, crie contas, compre créditos, faça deploy, opere lojas
   ou recupere backups reais sem autorização específica da sessão.
 - Não registre segredos/PII. Fixtures são sintéticas. Não copie .env para worktrees.
-- Política, workflows e perfis são superfície de controle: mudanças precisam de
-  revisão destacada. O agente não pode aumentar a própria autoridade.
+- Política, workflows, perfis, procedimentos, scripts e hooks são superfície de controle:
+  mudanças precisam de revisão destacada e de um trailer no commit apontando o ADR que as
+  justifica — `Control-Surface: docs/adr/NNNN-titulo.md`, com o ADR existindo na árvore.
+  `guard` recusa no pre-push e na CI. O agente não pode aumentar a própria autoridade.
+- Perfis de host são gerados de `team/roles.json`. Editou missão, rode
+  `node scripts/render-profiles.mjs` e revise o diff; não edite o TOML à mão.
 - Execute `node --test`, `node src/cli.mjs validate examples/plan.json` e
-  `node src/cli.mjs converge examples/plan.json` após alterar o laboratório.
+  `node src/cli.mjs converge examples/plan.json` após alterar o laboratório. Antes de
+  publicar, observe e julgue a própria mudança: `node scripts/observe.mjs <base> HEAD`
+  seguido de `node src/cli.mjs guard`.
   Informe o que foi executado e o que não foi possível verificar.
 - Registre base, escopo, evidências e pendências em docs/06 ou handoff da tarefa.
   Nunca afirme que outro agente leu, aprovou ou executou sem evidência.

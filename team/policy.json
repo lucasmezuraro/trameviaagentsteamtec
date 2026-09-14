@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "maxTasks": 30,
   "maxActive": 3,
   "maxWriters": 1,
@@ -23,7 +23,10 @@
     ".codex/",
     ".github/",
     "src/",
-    "test/"
+    "test/",
+    "scripts/",
+    "hooks/",
+    "procedures/"
   ],
   "requiredChecks": [
     "tests",

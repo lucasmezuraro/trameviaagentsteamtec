@@ -1,0 +1,32 @@
+{
+  "collector": "fixture",
+  "repository": "lucasmezuraro/tramevia",
+  "baseSha": "ef6a1242c9a57d09eb1c675b4cb1bed5368a8a0c",
+  "headSha": "b7d3f0a1c2e45986ab0c1d2e3f4a5b6c7d8e9f01",
+  "changedPaths": [
+    "packages/core/atp.mjs",
+    "tests/core/atp.test.mjs"
+  ],
+  "declarations": [],
+  "author": "implementer@example.invalid",
+  "approvals": [
+    "reviewer@example.invalid"
+  ],
+  "checks": [
+    {
+      "name": "tests",
+      "result": "passed",
+      "evidenceRef": "fixture:run/1"
+    },
+    {
+      "name": "scope",
+      "result": "passed",
+      "evidenceRef": "fixture:run/1"
+    },
+    {
+      "name": "quota-invariant",
+      "result": "passed",
+      "evidenceRef": "fixture:run/1"
+    }
+  ]
+}

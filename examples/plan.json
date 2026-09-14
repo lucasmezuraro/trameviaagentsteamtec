@@ -2,7 +2,7 @@
   "version": 2,
   "repository": "lucasmezuraro/tramevia",
   "baseSha": "ef6a1242c9a57d09eb1c675b4cb1bed5368a8a0c",
-  "policyDigest": "7c87e1abf30983fdcf7a420588eb978024f70e518dce5b73286c632f99efdaec",
+  "policyDigest": "51f69ba9dd81db1831f712cae4bb563c4aa59a9714ec0643d55e0a22bec8c6cc",
   "spec": {
     "clarifications": [],
     "successCriteria": [

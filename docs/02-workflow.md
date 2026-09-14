@@ -79,6 +79,15 @@ revisável. Nenhum agente envia email/Slack em nome do fundador sem autorizaçã
 
 ## Comandos reais do laboratório
 
+`guard` e `gate` julgam uma mudança **real**; os demais comandos trabalham sobre o plano.
+A observação é coletada por `scripts/observe.mjs` — único arquivo autorizado a rodar git — e
+avaliada por `src/`, que permanece puro. Quem é julgado não coleta os fatos sobre si mesmo.
+`guard` protege a superfície de controle deste repositório e exige o trailer
+`Control-Surface: docs/adr/NNNN-titulo.md`; `gate` confronta o candidato observado com o
+cartão que o plano autorizou. Ambos saem com código 1 quando recusam, e nenhum dos dois diz
+"aprovado": o sucesso é `clear_on_observable_facts`, sempre acompanhado do que não foi
+verificado — identidade do ator, isolamento efetivo e se o requisito foi de fato atendido.
+
 `validate` rejeita schema desconhecido, produção, caminho ambíguo, dependência inválida,
 limites excessivos, dúvida em aberto, requisito sem tarefa, tarefa sem requisito, requisito
 sem a evidência que o refutaria e plano fixado em outra versão de política. `plan` calcula

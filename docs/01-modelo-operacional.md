@@ -17,6 +17,13 @@ não criar departamentos ou manter agentes ocupados sem resultado verificável.
 | Revisor de entrega | Examinar correção, compatibilidade e aderência | parecer sobre SHA | todo candidato de código |
 | Operador de release | Promover, pausar e recuperar ambiente autorizado | registro de operação externa | fora da autonomia inicial |
 
+Cada missão é declarada em `team/roles.json` com cinco fronteiras explícitas — **quando
+entra**, **o que entrega**, **quando está concluída**, **quando para e devolve** e **o que é
+proibido** — e aponta um procedimento em `procedures/`. O especialista carrega o procedimento
+da sua missão e o cartão; não a documentação inteira. Os perfis em `.codex/agents` são
+gerados do catálogo (`scripts/render-profiles.mjs`) e um teste falha se divergirem: duas
+descrições da mesma missão sempre divergem, e a que o agente carrega é a que ninguém revisou.
+
 Os cinco especialistas têm perfis. Fundador e operador são responsabilidades humanas;
 coordenador usa a sessão principal. Não existe perfil de agente com chave de produção.
 Segurança e revisão de entrega podem ocorrer em paralelo em diretórios de leitura.
