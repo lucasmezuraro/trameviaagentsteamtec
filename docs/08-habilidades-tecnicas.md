@@ -34,9 +34,12 @@ skill genérica de Node ou de security review não detalhava: isolamento de dado
 retomada e cadeia da esteira. Não foi criado um papel de deploy: as habilidades permanecem
 acopladas a papéis existentes, em leitura quando for revisão, e sem poder de operação externa.
 
-O plano agora está ligado tanto a `policyDigest` quanto a `rolesDigest`. Se uma mudança altera
-papel, missão ou skill, o digest do catálogo muda e planos já preparados são recusados. Isso
-impede que um plano antigo herde silenciosamente uma capacidade nova. A versão do plano é 3.
+O plano está ligado tanto a `policyDigest` quanto a `rolesDigest`. Alterar papel, missão ou
+associação de skills no JSON muda o digest do catálogo e recusa planos anteriores. Alterar
+somente conteúdo de `SKILL.md` ou procedimento não muda esse digest. A
+[auditoria de maturidade](09-auditoria-de-maturidade.md) registra essa lacuna e a ausência de
+`.agents/` na superfície protegida atual. A versão do plano é 3; ela ainda não fixa todo o
+conteúdo instrucional do agente.
 
 ## Qualidade e segurança sem promessas vazias
 

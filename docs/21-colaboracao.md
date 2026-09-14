@@ -1,5 +1,23 @@
 # Registro de colaboração
 
+## Auditoria de maturidade — 2026-09-14
+
+- Autor: Codex; pedido do proprietário para validar a prontidão integral do time.
+- Fetch confirmou main `65ace38dd1977755dda42291c0f52252df8f7186`, merge do PR #3; árvore
+  idêntica a `4c94266`. Checkout limpo avançado por `merge --ff-only`, branch própria
+  `codex/maturity-audit`. Trabalho do peer preservado.
+- Escopo: relatório docs/09, dois probes reproduzíveis e correção da promessa de invalidação
+  de skills em docs/08. Não houve alteração de comportamento dos gates ou configuração remota.
+- Evidência: 151 testes locais aprovados; API pública confirmou CI verde na main e no PR #3,
+  proteção clássica desativada e rulesets efetivos vazios. Probes reproduziram lacunas de
+  skills, omissão de check do escritor, ADR untracked e truncamento de URL; também ilustram
+  limites de revisão e mensurabilidade já existentes.
+- Revisão adicional: subagente de leitura examinou gates/coletor/CI. O coordenador reproduziu
+  o problema do coletor em Git temporário sintético; não declarou teste de host dos perfis team.
+- Parecer: fundação supervisionada com bloqueios de maturidade; execução autônoma não aprovada.
+  Relatório inclui critérios de fechamento e roteiro T1/T2/T3. Sem portas, produção, segredos,
+  dados reais, autenticação em loja ou operação Nuvemshop.
+
 ## Revisão de cobertura de skills — 2026-09-14
 
 - Autor: Codex, solicitado pelo proprietário. Base: `cc222ed` em `origin/main`; continuação na
