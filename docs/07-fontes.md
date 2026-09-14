@@ -20,6 +20,12 @@ como recomendação universal ou certificação de fornecedor.
   referência para verificar sandbox e permissões no ensaio do host.
 - [GitHub: segurança de Actions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions):
   permissões mínimas e fixação de actions por SHA.
+- [NIST SSDF](https://csrc.nist.gov/projects/ssdf): referência consultada em 2026-09-14 para
+  práticas de desenvolvimento seguro orientadas por risco; adaptações neste repositório não são
+  certificação NIST nem checklist completo.
+- [GitHub: uso seguro de Actions](https://docs.github.com/en/actions/reference/security/secure-use):
+  referência consultada em 2026-09-14 para menor privilégio, SHA de actions, conteúdo não
+  confiável e artefatos. Atestação e SBOM dependem de permissões/plano e não foram ativados.
 - [GitHub: branches protegidas](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches):
   referência para ativação de checks/revisões, sujeita à disponibilidade na conta.
 - [github/spec-kit](https://github.com/github/spec-kit): README, `templates/spec-template.md`

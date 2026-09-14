@@ -7,11 +7,20 @@ nomes com `$skill`. O catálogo é a fonte de verdade; após mudar papéis, rode
 
 | Papel | Skills | Resultado exigido |
 |---|---|---|
-| Exploração | `tramevia-architecture-discovery` | fatos no commit-base, fronteiras e dúvidas explícitas |
-| Qualidade | `tramevia-quality-assurance` | matriz com oráculos e contraexemplos |
-| Implementação | `tramevia-node-web`, `tramevia-quality-assurance` | mudança pequena, testes no SHA e handoff |
-| Segurança | `tramevia-security-review` | achados reproduzíveis ou lacunas de evidência |
-| Revisão de entrega | qualidade + segurança | confronto requisito/diff/evidência no mesmo SHA |
+| Exploração | arquitetura, dados/tenant e integração | fatos no commit-base, fronteiras e dúvidas explícitas |
+| Qualidade | QA, dados/tenant, integração e recuperação | matriz com oráculos e contraexemplos |
+| Implementação | Node/web, QA, dados/tenant, integração e CI/CD | mudança pequena, testes no SHA e handoff |
+| Segurança | segurança, dados/tenant, integração e CI/CD | achados reproduzíveis ou lacunas de evidência |
+| Revisão de entrega | QA, segurança, recuperação e CI/CD | confronto requisito/diff/evidência no mesmo SHA |
+
+## Cobertura que foi acrescentada
+
+| Skill | Lacuna que fecha | Papéis que a usam |
+|---|---|---|
+| `tramevia-data-tenancy` | RLS, FKs compostas, migração, ledger, auditoria e restore de dados | exploração, QA, implementação e segurança |
+| `tramevia-integration-reliability` | Webhook/API, inbox/outbox, idempotência, `unknown` e reconciliação | exploração, QA, implementação e segurança |
+| `tramevia-resilience-recovery` | Eventos, incidentes, backup, ensaio de restore e `RECOVERY_HOLD` | QA e revisão de entrega |
+| `tramevia-ci-cd-supply-chain` | Permissões da CI, actions, dependências, artefatos, promoção e rollback | implementação, segurança e revisão de entrega |
 
 ## O que a associação faz
 
@@ -19,6 +28,11 @@ Ela carrega a disciplina adequada quando a missão começa: descoberta não vira
 implementação verifica o stack real antes de usar Node/Next/JavaScript, QA prepara casos que
 refutam defeitos e segurança percorre as fronteiras de confiança. Skill é instrução versionada,
 não ferramenta, credencial, permissão de rede ou autorização de escopo.
+
+As quatro novas skills cobrem os riscos que o adaptador do MVP já havia identificado e que uma
+skill genérica de Node ou de security review não detalhava: isolamento de dados, efeito remoto,
+retomada e cadeia da esteira. Não foi criado um papel de deploy: as habilidades permanecem
+acopladas a papéis existentes, em leitura quando for revisão, e sem poder de operação externa.
 
 O plano agora está ligado tanto a `policyDigest` quanto a `rolesDigest`. Se uma mudança altera
 papel, missão ou skill, o digest do catálogo muda e planos já preparados são recusados. Isso

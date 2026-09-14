@@ -4,7 +4,9 @@
     "title": "Exploração e arquitetura",
     "sandbox": "read-only",
     "skills": [
-      "tramevia-architecture-discovery"
+      "tramevia-architecture-discovery",
+      "tramevia-data-tenancy",
+      "tramevia-integration-reliability"
     ],
     "procedure": "procedures/exploration.md",
     "mission": "Reduzir incerteza sobre o código que já existe, para que o plano seja feito sobre fato e não sobre suposição.",
@@ -19,7 +21,10 @@
     "title": "Qualidade e ensaios",
     "sandbox": "read-only",
     "skills": [
-      "tramevia-quality-assurance"
+      "tramevia-quality-assurance",
+      "tramevia-data-tenancy",
+      "tramevia-integration-reliability",
+      "tramevia-resilience-recovery"
     ],
     "procedure": "procedures/test-design.md",
     "mission": "Definir, antes da implementação, o que faria a entrega ser considerada errada.",
@@ -35,7 +40,10 @@
     "sandbox": "workspace-write",
     "skills": [
       "tramevia-node-web",
-      "tramevia-quality-assurance"
+      "tramevia-quality-assurance",
+      "tramevia-data-tenancy",
+      "tramevia-integration-reliability",
+      "tramevia-ci-cd-supply-chain"
     ],
     "procedure": "procedures/implementation.md",
     "mission": "Transformar um cartão delimitado em um candidato pequeno, testado e revisável.",
@@ -50,7 +58,10 @@
     "title": "Segurança e confiança",
     "sandbox": "read-only",
     "skills": [
-      "tramevia-security-review"
+      "tramevia-security-review",
+      "tramevia-data-tenancy",
+      "tramevia-integration-reliability",
+      "tramevia-ci-cd-supply-chain"
     ],
     "procedure": "procedures/security-review.md",
     "mission": "Procurar o caminho pelo qual esta mudança concede mais autoridade do que aparenta.",
@@ -66,7 +77,9 @@
     "sandbox": "read-only",
     "skills": [
       "tramevia-quality-assurance",
-      "tramevia-security-review"
+      "tramevia-security-review",
+      "tramevia-resilience-recovery",
+      "tramevia-ci-cd-supply-chain"
     ],
     "procedure": "procedures/delivery-review.md",
     "mission": "Verificar se o candidato faz o que o requisito pediu, e apenas isso.",

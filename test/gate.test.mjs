@@ -140,6 +140,21 @@ test('toda missão é completa e aponta um procedimento existente', () => {
   }
   assert.equal(roles.filter(r => r.sandbox === 'workspace-write').length, 1, 'mais de um papel com escrita');
 });
+test('papéis mantêm cobertura mínima para os riscos do MVP', () => {
+  const required = {
+    team_explorer: ['tramevia-architecture-discovery','tramevia-data-tenancy','tramevia-integration-reliability'],
+    team_test_designer: ['tramevia-quality-assurance','tramevia-data-tenancy','tramevia-integration-reliability','tramevia-resilience-recovery'],
+    team_implementer: ['tramevia-node-web','tramevia-data-tenancy','tramevia-integration-reliability','tramevia-ci-cd-supply-chain'],
+    team_security_reviewer: ['tramevia-security-review','tramevia-data-tenancy','tramevia-integration-reliability','tramevia-ci-cd-supply-chain'],
+    team_delivery_reviewer: ['tramevia-quality-assurance','tramevia-security-review','tramevia-resilience-recovery','tramevia-ci-cd-supply-chain']
+  };
+  for (const [roleId, skills] of Object.entries(required)) {
+    const role = roles.find(item => item.id === roleId);
+    assert.ok(role, roleId + ': papel ausente');
+    for (const skill of skills)
+      assert.ok(role.skills.includes(skill), roleId + ': skill essencial ausente: ' + skill);
+  }
+});
 test('texto de missão com aspas quebraria o perfil e é recusado na geração', () => {
   assert.throws(() => renderProfile({...roles[0], mission:'faça "tudo"'}), /aspas/);
 });
