@@ -11,6 +11,7 @@ const spec = () => fresh().spec;
 
 test('o plano de exemplo está fixado na política vigente', () => {
   assert.equal(fresh().policyDigest, digest(policy));
+  assert.equal(fresh().rolesDigest, digest(roles));
 });
 test('plano da versão anterior não passa a valer por omissão', () => {
   const p = fresh(); p.version = 1;
@@ -19,6 +20,11 @@ test('plano da versão anterior não passa a valer por omissão', () => {
 test('mudança de política invalida plano em voo em vez de ampliar o que ele pode fazer', () => {
   const widened = {...policy, actions:[...policy.actions, 'deploy']};
   assert.throws(() => validatePlan(fresh(), widened, roles), /outra versão de política/);
+});
+test('mudança no catálogo de papéis invalida plano em voo', () => {
+  const changed = structuredClone(roles);
+  changed[0].mission += ' com outra fronteira.';
+  assert.throws(() => validatePlan(fresh(), policy, changed), /outro catálogo de papéis/);
 });
 
 const invalidSpecs = [
@@ -80,7 +86,7 @@ test('converge relata a lacuna em vez de lançar, e não afirma que houve trabal
   assert.equal(report.metrics.requirements, 2);
 });
 test('converge sobrevive a plano estruturalmente quebrado', () => {
-  const report = converge({version:2}, policy, roles);
+  const report = converge({version:3}, policy, roles);
   assert.equal(report.status, 'coverage_report_only');
   assert.deepEqual(report.metrics, {requirements:0, tasks:0, evidenced:0, gaps:0});
 });

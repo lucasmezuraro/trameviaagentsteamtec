@@ -132,6 +132,10 @@ test('toda missão é completa e aponta um procedimento existente', () => {
       assert.ok(typeof role[field] === 'string' && role[field].trim().length > 20, role.id + '.' + field);
     assert.match(role.procedure, /^procedures\/[a-z-]+\.md$/);
     assert.ok(existsSync(new URL('../' + role.procedure, import.meta.url)), role.procedure);
+    assert.ok(Array.isArray(role.skills) && role.skills.length, role.id + '.skills ausente');
+    for (const skill of role.skills)
+      assert.ok(existsSync(new URL('../.agents/skills/' + skill + '/SKILL.md', import.meta.url)),
+        role.id + ': skill ausente: ' + skill);
     assert.ok(['read-only','workspace-write'].includes(role.sandbox));
   }
   assert.equal(roles.filter(r => r.sandbox === 'workspace-write').length, 1, 'mais de um papel com escrita');

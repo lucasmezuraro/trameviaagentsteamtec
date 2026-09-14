@@ -1,5 +1,22 @@
 # Registro de colaboração
 
+## Skills técnicas e endurecimento de governança — 2026-09-14
+
+- Autor: Codex, a pedido do proprietário. Base remota sincronizada em `cc222ed` antes da
+  alteração; branch de trabalho `codex/role-skills-hardening`. Nenhum trabalho do peer foi
+  descartado ou sobrescrito.
+- Escopo: skills locais para descoberta, Node/web, qualidade e segurança; associação
+  versionada por papel; perfis Codex regenerados; plano v3 fixado também ao `rolesDigest`;
+  ADR 0003, fontes e guia operacional atualizados.
+- Validação: `node scripts/render-profiles.mjs`; 150 testes Node aprovados; `validate`,
+  `converge`, `plan` e `simulate` aprovados sobre o exemplo v3; links locais e sincronia de
+  perfis cobertos pelos testes; `git diff --check` limpo. A tentativa de parsear TOML com o
+  launcher Python do host foi recusada pelo sistema antes de executar; a verificação estrutural
+  disponível é a geração e comparação determinística dos perfis pelo teste.
+- Limites: não houve segredo, conta, porta, serviço, deploy, acesso Nuvemshop, dado de cliente
+  ou ensaio de host. Descoberta real de skills e aplicação de sandbox permanecem verificações
+  de host, não propriedades provadas por estes arquivos.
+
 ## Fundação do time — 2026-09-14
 
 - Autor/integrador desta entrega: Codex, tarefa solicitada pelo proprietário.

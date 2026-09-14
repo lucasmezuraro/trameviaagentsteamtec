@@ -22,12 +22,13 @@ export const overlap = (a, b) => a.replace(/\/$/,'').toLowerCase() === b.replace
 export const isWriter = (task) => task.actions.some(a => a === 'edit' || a === 'test');
 
 export function validatePlan(plan, policy, roles) {
-  keys(plan, ['version', 'repository', 'baseSha', 'policyDigest', 'spec', 'tasks'], 'plano');
-  if (plan.version !== 2 || !policy.repositories.includes(plan.repository) || !sha(plan.baseSha))
+  keys(plan, ['version', 'repository', 'baseSha', 'policyDigest', 'rolesDigest', 'spec', 'tasks'], 'plano');
+  if (plan.version !== 3 || !policy.repositories.includes(plan.repository) || !sha(plan.baseSha))
     fail('versão, repositório ou base inválidos');
   // The plan is bound to the governance version it was authorized under. Changing policy or
-  // roles invalidates plans in flight instead of silently widening what they may do.
+  // roles invalidate plans in flight instead of silently widening what they may do.
   if (plan.policyDigest !== digest(policy)) fail('plano fixado em outra versão de política');
+  if (plan.rolesDigest !== digest(roles)) fail('plano fixado em outro catálogo de papéis');
   const spec = validateSpec(plan.spec);
   if (!Array.isArray(plan.tasks) || !integer(plan.tasks.length, policy.maxTasks)) fail('quantidade de tarefas inválida');
   const ids = plan.tasks.map(t => t?.id);

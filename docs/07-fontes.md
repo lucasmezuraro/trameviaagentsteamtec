@@ -6,6 +6,14 @@ como recomendação universal ou certificação de fornecedor.
 - [OpenAI: subagentes](https://learn.chatgpt.com/docs/agent-configuration/subagents):
   perfis TOML em .codex/agents; name, description e developer_instructions; sandbox_mode
   como configuração; limite de threads. Modelos não foram fixados: herdam a escolha do usuário.
+- [OpenAI: AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md) e
+  [skills](https://learn.chatgpt.com/docs/build-skills): instruções de projeto em camadas e
+  skills em `.agents/skills/` com `SKILL.md` foram conferidas em 2026-09-14. A descoberta no
+  host continua pendente de ensaio, não é presumida por existir no repositório.
+- [OpenAI: rules](https://learn.chatgpt.com/docs/agent-configuration/rules) e
+  [hooks](https://learn.chatgpt.com/docs/hooks): ambos dependem de host/projeto confiável;
+  hooks são guardrails e não conseguem desfazer efeito já ocorrido. Não foram usados como
+  prova de isolamento nesta fundação.
 - [OpenAI: worktrees](https://learn.chatgpt.com/pt-BR/docs/environments/git-worktrees):
   checkout separado e restrição de branch; não equivale a ambiente hospedado.
 - [OpenAI: segurança](https://learn.chatgpt.com/docs/security):
