@@ -55,6 +55,8 @@ test('arquivo e diretório homônimos disputam reserva, prefixo diferente não',
   p.tasks = [p.tasks[2],p.tasks[0]]; p.tasks[0].dependsOn = [];
   p.tasks[0].paths = ['src/']; p.tasks[1].paths = ['src'];
   p.tasks[0].resources = ['writer']; p.tasks[1].resources = ['reader'];
+  p.spec.requirements = p.spec.requirements.filter(r => r.id === 'FR-001');
+  p.tasks.forEach(t => { t.covers = ['FR-001']; });
   assert.deepEqual(planWaves(p,policy,roles).waves,[['F0-CORE'],['F0-MAP']]);
 });
 test('catálogo e perfis Codex permanecem alinhados', () => {

@@ -7,6 +7,14 @@ const json = path => JSON.parse(readFileSync(new URL(path, import.meta.url), 'ut
 const policy = json('../team/policy.json'), roles = json('../team/roles.json');
 const fresh = () => json('../examples/plan.json');
 const task = plan => plan.tasks[2];
+// Planner fixtures replace the task set, so the spec narrows with it: coverage is a rule of
+// the plan, not scenery these tests may leave inconsistent.
+const narrow = (plan, requirement, check) => {
+  plan.spec.requirements = plan.spec.requirements.filter(r => r.id === requirement);
+  if (check) plan.spec.requirements[0].check = check;
+  plan.tasks.forEach(t => { t.covers = [requirement]; });
+  return plan;
+};
 
 test('plano validado não se declara despacho; leitores precedem o escritor dependente', () => {
   const p = fresh();
@@ -49,16 +57,16 @@ test('planejador serializa escritores mesmo sem colisão de arquivos', () => {
   const p = fresh();
   p.tasks = [task(p), {...structuredClone(task(p)), id:'F0-NEXT', paths:['other/'], resources:['other']}];
   p.tasks.forEach(t => t.dependsOn = []);
-  assert.deepEqual(planWaves(p,policy,roles).waves, [['F0-CORE'],['F0-NEXT']]);
+  assert.deepEqual(planWaves(narrow(p,'FR-001'),policy,roles).waves, [['F0-CORE'],['F0-NEXT']]);
 });
 test('recurso compartilhado impede leitor coexistir com escritor', () => {
   const p = fresh(); p.tasks = [task(p), p.tasks[0]];
   p.tasks[0].dependsOn = []; p.tasks[1].paths = ['docs/'];
-  assert.deepEqual(planWaves(p,policy,roles).waves, [['F0-CORE'],['F0-MAP']]);
+  assert.deepEqual(planWaves(narrow(p,'FR-001'),policy,roles).waves, [['F0-CORE'],['F0-MAP']]);
 });
 test('no máximo três leitores ativos na rodada', () => {
-  const p = fresh(); p.tasks = Array.from({length:5}, (_,i) => ({...p.tasks[0], id:'READ-'+i}));
-  assert.deepEqual(planWaves(p,policy,roles).waves.map(w => w.length), [3,2]);
+  const p = fresh(); p.tasks = Array.from({length:5}, (_,i) => ({...structuredClone(p.tasks[0]), id:'READ-'+i}));
+  assert.deepEqual(planWaves(narrow(p,'FR-001','contract-map'),policy,roles).waves.map(w => w.length), [3,2]);
 });
 test('digest independe da ordem das chaves mas detecta mudança de conteúdo', () => {
   assert.equal(digest({b:2,a:1}), digest({a:1,b:2}));
@@ -81,7 +89,11 @@ const invalidCandidates = [
   ['teste não executado', c => { c.checks[0].result = 'skipped'; }, 'check_missing_failed_or_stale:tests'],
   ['teste duplicado', c => { c.checks.push(c.checks[0]); }, 'check_missing_failed_or_stale:tests'],
   ['evidência ausente', c => { c.checks[0].evidenceRef = ''; }, 'check_missing_failed_or_stale:tests'],
-  ['P0 aberto', c => { c.findings.push({severity:'P0',status:'open'}); }, 'open_findings'],
+  ['P0 aberto', c => { c.findings.push({severity:'P0',status:'open',raisedInGeneration:1}); }, 'open_findings'],
+  ['P0 fechado na mesma geração', c => { c.findings.push({severity:'P0',status:'resolved',raisedInGeneration:1}); }, 'critical_finding_resolved_in_place'],
+  ['achado de geração futura', c => { c.findings.push({severity:'P2',status:'resolved',raisedInGeneration:9}); }, 'findings_invalid'],
+  ['cobertura de requisito omitida', c => { c.coveredRequirements = []; }, 'requirement_coverage_mismatch'],
+  ['cobertura de requisito inventada', c => { c.coveredRequirements = ['FR-002']; }, 'requirement_coverage_mismatch'],
   ['achados omitidos', c => { delete c.findings; }, 'findings_invalid'],
   ['prefixo falso', c => { c.changedPaths = ['packages/core-other/a.mjs']; }, 'scope_escape'],
   ['arquivo Windows ambíguo', c => { c.changedPaths = ['packages/core/CON.txt']; }, 'changed_paths_invalid'],
@@ -103,7 +115,7 @@ test('política protegida não é liberada mesmo dentro do escopo e com testes s
   assert.ok(assessCandidate(p,task(p).id,c,policy,roles,expected()).reasons.includes('policy_owner_review_required'));
 });
 test('um campo de aprovação não contorna finding aberto', () => {
-  assert.equal(assess(c => { c.approved = true; c.findings = [{severity:'P1',status:'open'}]; }).status, 'blocked');
+  assert.equal(assess(c => { c.approved = true; c.findings = [{severity:'P1',status:'open',raisedInGeneration:1}]; }).status, 'blocked');
 });
 test('timeout não permite retry antes de encerrar e reconciliar', () => {
   const t = task(fresh()), r = createRun(t,'r1');
@@ -125,5 +137,5 @@ test('retomada usa nova geração, recusa resposta antiga e não excede duas ten
 test('simulação publica explicitamente a ausência de despacho e aprovação real', () => {
   const s = simulate(fresh(),policy,roles);
   assert.equal(s.dispatchPerformed,false); assert.equal(s.externalApproval,false);
-  assert.equal(s.scenarios.filter(s => s.status === 'blocked').length,6);
+  assert.equal(s.scenarios.filter(s => s.status === 'blocked').length,8);
 });

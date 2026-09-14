@@ -14,6 +14,11 @@ como recomendação universal ou certificação de fornecedor.
   permissões mínimas e fixação de actions por SHA.
 - [GitHub: branches protegidas](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches):
   referência para ativação de checks/revisões, sujeita à disponibilidade na conta.
+- [github/spec-kit](https://github.com/github/spec-kit): README, `templates/spec-template.md`
+  e `templates/commands/analyze.md` consultados em 2026-09-14. Origem do requisito numerado,
+  do critério mensurável, do portão de dúvida aberta e das categorias de lacuna. Nada do
+  pacote foi instalado ou executado: as regras foram reimplementadas e testadas aqui, e o
+  que foi recusado está no [ADR 0001](adr/0001-adocao-parcial-do-spec-kit.md).
 
 Actions checkout v4 e setup-node v4 tiveram referências consultadas por git ls-remote.
 O workflow fixa os SHAs observados. Isso identifica o código executado, não constitui

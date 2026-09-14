@@ -31,7 +31,8 @@ entre si sem decisão registrada pelo coordenador.
 
 ```mermaid
 flowchart TD
- H[Fundador: objetivo e limites] --> C[Coordenador: cartão e dependências]
+ H[Fundador: objetivo e limites] --> F[Especificação: FR/SC e dúvidas resolvidas]
+ F --> C[Coordenador: cartão e dependências]
  C --> E[Exploração]
  C --> Q[Desenho de testes]
  E --> P[Plano consolidado]
@@ -53,13 +54,17 @@ A v0.1 reserva no máximo um escritor global, mesmo quando diretórios não se c
 
 ## Método e previsibilidade
 
-Kanban com limites de trabalho em andamento: preparar → pronto → executar → revisar →
-integrar. Entrega vertical pequena, branch curta e teste do comportamento.
+Kanban com limites de trabalho em andamento: especificar → preparar → pronto → executar →
+revisar → integrar. Entrega vertical pequena, branch curta e teste do comportamento.
 Sprint é opcional; não usar calendário como prova de prontidão. Duração do cartão é
 um limite de execução, não promessa de prazo comercial.
 
-Definição de preparado: objetivo observável, dono de contrato, entradas disponíveis,
-dependências integradas, ambiente permitido, escopo, aceite, orçamento e revisor.
+Definição de especificado: requisitos numerados, critério de sucesso com grandeza, evidência
+capaz de refutar cada requisito e nenhuma dúvida em aberto. Enquanto houver dúvida, o plano
+não é válido — a decisão volta a quem tem autoridade sobre o contrato, e não é suprida por
+suposição do implementador. Definição de preparado: objetivo observável, requisitos cobertos,
+dono de contrato, entradas disponíveis, dependências integradas, ambiente permitido, escopo,
+aceite, orçamento e revisor.
 Definição de candidato: diff delimitado, testes concluídos no SHA e pendências explícitas.
 Definição de integrado: destino contém o candidato ou resultado reconciliado novamente
 testado e revisado. Definição de implantado: evidência do provedor e verificação do ambiente.

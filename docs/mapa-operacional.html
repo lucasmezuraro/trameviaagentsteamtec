@@ -63,7 +63,8 @@ footer{padding:35px 0 55px;font-size:14px}.status{font-weight:700;color:var(--or
 <section id="sequencia"><span class="eyebrow">02 / UM EXEMPLO CONCRETO</span><h2>“Quero que a loja A não veja os dados da loja B.”</h2>
 <p class="muted">Este é um exemplo de tarefa futura do MVP. O sistema de lojas ainda não foi implementado por esta fundação.</p>
 <ol class="flow">
-<li><article><h3>Transformar a intenção em um cartão</h3><p>O coordenador registra: objetivo, repositório, commit-base, arquivos permitidos, testes, tempo máximo e condição de parada.</p><p class="small"><strong>Você recebe:</strong> uma tarefa compreensível com resultado verificável.</p></article></li>
+<li><article><h3>Escrever o requisito antes do plano</h3><p>FR-001: um usuário da loja A não obtém dado da loja B. SC-001: 0 registro de outro tenant em 100% das tentativas. Evidência: <code>tenant-isolation</code>. O que ficou implícito vira dúvida aberta — e dúvida aberta rejeita o plano.</p><p class="small"><strong>Você recebe:</strong> algo contra o que conferir a entrega, em vez de uma frase de intenção.</p></article></li>
+<li><article><h3>Transformar a intenção em um cartão</h3><p>O coordenador registra: objetivo, requisitos cobertos, repositório, commit-base, arquivos permitidos, testes, tempo máximo e condição de parada.</p><p class="small"><strong>Você recebe:</strong> uma tarefa compreensível com resultado verificável.</p></article></li>
 <li><article><h3>Descobrir a regra e preparar a prova</h3><p>Explorador lê o contrato de isolamento. Especialista em testes define: A tenta ler B, vincular registro de B e reutilizar uma conexão que antes atendia B.</p><p class="small"><strong>Saída:</strong> plano consolidado e cenários que precisam falhar com acesso negado.</p></article></li>
 <li><article><h3>Confirmar o espaço de trabalho</h3><p>Coordenador verifica branch, checkout e ausência de outro escritor. Dizer “use worktree” não cria uma worktree. Testes de banco ocorrerão em ambiente hospedado descartável.</p><p class="small"><strong>Limite:</strong> sem servidor, túnel ou banco de cliente no seu PC.</p></article></li>
 <li><article><h3>Construir uma mudança pequena</h3><p>Implementador altera a política de acesso e seus testes. Se precisar mudar a arquitetura ou sair dos arquivos combinados, devolve a necessidade antes de alterar.</p><p class="small"><strong>Saída:</strong> candidato identificado pelo SHA, que é o identificador do commit.</p></article></li>
@@ -89,7 +90,7 @@ footer{padding:35px 0 55px;font-size:14px}.status{font-weight:700;color:var(--or
 </section>
 <section id="primeira"><span class="eyebrow">05 / ATIVAR SEM PULAR ETAPAS</span><h2>A primeira rodada é pequena e demonstrável.</h2>
 <div class="grid">
-<article class="card"><span class="number">AGORA</span><h3>Ler e ensaiar</h3><p>Abra o repositório no Codex, confira os perfis e execute o laboratório: <code>node --test</code> e <code>node src/cli.mjs simulate</code>.</p></article>
+<article class="card"><span class="number">AGORA</span><h3>Ler e ensaiar</h3><p>Abra o repositório no Codex, confira os perfis e execute o laboratório: <code>node --test</code>, <code>node src/cli.mjs converge examples/plan.json</code> e <code>node src/cli.mjs simulate</code>.</p></article>
 <article class="card"><span class="number">EM SEGUIDA</span><h3>Uma tarefa completa</h3><p>Um cartão, um escritor, um candidato, uma revisão. Comprove sandbox e check remoto antes de tratar os controles como ativos.</p></article>
 <article class="card"><span class="number">POR EVIDÊNCIA</span><h3>Primeira fatia do MVP</h3><p>Use o adaptador Tramevia. Comece pela fundação e leitura/cálculo; publicação Nuvemshop continua sujeita aos portões do produto.</p></article>
 </div>
