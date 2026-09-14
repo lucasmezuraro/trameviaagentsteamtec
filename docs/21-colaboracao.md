@@ -47,3 +47,18 @@
   código do spec-kit e confronto da especificação com o repositório do produto.
 - Nenhuma autoridade nova foi concedida: a mudança só acrescenta motivos de recusa.
 
+## Resync Codex — 2026-09-14
+
+- Pedido do proprietário: resync. Base Codex 52150d2; remoto e branch do peer em
+  8a84379dba31dd444c9d4f3efc0e247ce4497a6c após fetch de origin.
+- Checkout inicialmente limpo na branch claude/spec-driven-adoption. Codex voltou à
+  própria branch codex/team-foundation e a avançou por merge --ff-only até 8a84379.
+  A branch do peer e main foram preservadas.
+- Validação no SHA sincronizado: 112 testes Node aprovados; validate e converge
+  aprovados sobre o plano de exemplo, sem lacunas declaradas; git diff --check limpo.
+- Trata-se de sincronização e verificação local, não de revisão profunda do novo
+  contrato nem de aprovação de produção. Revisão independente da camada spec e CI
+  remoto continuam pendentes de comprovação.
+- Registro acrescentado em commit próprio após os testes; sem mudança em código,
+  credenciais, ambientes, serviços ou dados de loja.
+
